@@ -1,0 +1,59 @@
+[include]
+  path = ~/.config/git/config.local
+[user]
+  useConfigOnly = true
+[core]
+  autocrlf = input
+  safecrlf = true
+  quotepath = false
+  filemode = false
+  precomposeunicode = true
+  ignorecase = false
+  excludesfile = ~/.config/git/ignore
+  editor = nvim
+  hooksPath = ~/.config/git/hooks
+[color]
+  ui = auto
+[status]
+  showUntrackedFiles = all
+[merge]
+  ff = false
+[pull]
+  rebase = preserve
+[push]
+  default = simple
+[alias]
+  alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/g' | sort
+  a = add
+  b = branch
+  bb = branch -vv --all
+  # delete branch(es)
+  db = "!f () {\
+    if [ $# -eq 0 -a `which fzf` ]; then\
+      git branch --sort=authordate | fzf -m --ansi --prompt='delete branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d;\
+    elif [ $# -ge 1 ]; then\
+      git branch | grep ${@} | xargs git branch -d;\
+    fi;\
+  };f"
+  ci = commit
+  ca = commit --amend --date=now
+  co = "!f () {\
+    if [ $# -eq 0 -a `which fzf` ]; then\
+      git branch --sort=authordate | fzf --ansi --prompt='checkout\\> ' | tr -d ' \\*' | xargs -n 1 git checkout;\
+    elif [ $# -ge 1 ]; then\
+      git checkout ${@};\
+    fi;\
+  };f"
+  d = diff
+  dc = diff --cached
+  f = fetch
+  fp = fetch --prune --all
+  l = log --graph --date=short --pretty=format:'%x09%C(magenta)%h %C(cyan)%cd %C(green)%an %Creset%s%C(red)%d%Creset'
+  ll = log --all --graph --numstat --decorate=full --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(magenta)%h%C(red)%d %Creset<%C(green)%an%Creset> [%C(yellow)%cd%Creset]%n%C(cyan bold)%w(70)%s%n%w(74,2,2)%b'
+  remotes = remote -v
+  sh = show
+  s = status
+  ss = status --short --branch
+  url = config --get remote.origin.url
+[ghq]
+  root = ~/go/src

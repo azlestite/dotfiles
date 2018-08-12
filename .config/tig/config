@@ -1,0 +1,23 @@
+set main-view = id date author:full commit-title:graph=v2,refs=yes
+
+set line-graphics = utf-8
+
+set ignore-space = at-eol
+
+set split-view-height = 80%
+
+bind generic g move-first-line
+bind generic G      move-last-line
+bind main    G      move-last-line
+# reassign default g and G commands
+bind generic E view-grep
+bind main    <C-g> :toggle commit-title-graph
+
+bind generic <C-f> move-page-down
+bind generic <C-b> move-page-up
+# copy commit id
+bind generic H !@sh -c "echo %(commit) | xsel -ip && xsel -op | xsel -ib"
+
+bind main <Ctrl-r> ?git rebase -i %(commit)
+
+bind status C !git commit -v

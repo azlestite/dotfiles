@@ -1,0 +1,12 @@
+select-pane -t 1
+split-window -h
+select-pane -t 1
+split-window -v
+select-pane -t 3
+swap-pane -U
+
+resize-pane -D -t 2 10
+resize-pane -L -t 3 15
+
+select-pane -t 3
+display-panes

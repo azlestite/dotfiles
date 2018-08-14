@@ -146,6 +146,9 @@ export GPG_TTY
 # Refresh gpg-agent tty in case user switches into an X session
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
+# hub
+eval "$(hub alias -s)"
+
 # use *env on tmux
 if [ -d "$HOME"/.anyenv ]; then
   eval "$(anyenv init -)"

@@ -46,3 +46,7 @@ if [ -n "$BASH_VERSION" ]; then
       . "$HOME/.bashrc"
     fi
 fi
+
+# Use Windows application
+export PATH="$PATH:/mnt/c/Program Files (x86)/Google/Chrome/Application"
+export BROWSER="chrome.exe"

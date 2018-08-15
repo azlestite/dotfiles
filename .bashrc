@@ -193,3 +193,8 @@ if [ $SHLVL = 1 ]; then
   alias tmux="tmux attach || \
     tmux new-session \; source-file ~/.tmux/default-session"
 fi
+
+# cron
+if ! pgrep cron >/dev/null 2>&1; then
+  sudo service cron start
+fi

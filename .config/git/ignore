@@ -66,10 +66,10 @@ tags
 ### https://raw.github.com/github/gitignore/5a7a3cddf3fcecb926a84019f58abf0c43730a61/Global/VisualStudioCode.gitignore
 
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+#!.vscode/settings.json
+#!.vscode/tasks.json
+#!.vscode/launch.json
+#!.vscode/extensions.json
 
 
 ### https://raw.github.com/github/gitignore/5a7a3cddf3fcecb926a84019f58abf0c43730a61/Global/VirtualEnv.gitignore

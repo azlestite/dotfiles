@@ -198,3 +198,8 @@ fi
 if ! pgrep cron >/dev/null 2>&1; then
   sudo service cron start
 fi
+
+# MySQL
+if ! pgrep -u mysql >/dev/null 2>&1; then
+  sudo service mysql start
+fi

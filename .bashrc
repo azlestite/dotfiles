@@ -147,7 +147,7 @@ export GPG_TTY
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # hub
-eval "$(hub alias -s)"
+#eval "$(hub alias -s)"
 
 # use *env on tmux
 if [ -d "$HOME"/.anyenv ]; then

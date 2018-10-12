@@ -32,6 +32,7 @@ export PATH="$PATH:$GOPATH/bin"
 
 # VcXsrv
 export DISPLAY=localhost:0.0
+export LIBGL_ALWAYS_INDIRECT=1
 
 # Fcitx
 im=fcitx

@@ -29,6 +29,8 @@ export PIPENV_VENV_IN_PROJECT=1
 # Go
 export GOPATH=$HOME/go
 export PATH="$PATH:$GOPATH/bin"
+# Yarn
+export PATH="$PATH:$HOME/.yarn/bin"
 
 # VcXsrv
 export DISPLAY=localhost:0.0

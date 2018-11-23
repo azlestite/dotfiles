@@ -43,6 +43,9 @@ export DefaultIMModule=$im
 export GTK_IM_MODULE=$im
 export QT_IM_MODULE=$im
 
+# Docker for Windows
+export DOCKER_HOST="tcp://0.0.0.0:2375"
+
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then

@@ -203,8 +203,3 @@ fi
 if ! pgrep -u mysql >/dev/null 2>&1; then
   sudo service mysql start
 fi
-
-# Docker
-if ! pgrep -u root docker >/dev/null 2>&1; then
-  sudo service docker start
-fi

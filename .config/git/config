@@ -27,16 +27,17 @@
   a = add
   b = branch
   bb = branch -vv --all
-  # delete branch(es)
+  # delete branch(es) with fzf
   db = "!f () {\
     if [ $# -eq 0 -a `which fzf` ]; then\
-      git branch --sort=authordate | fzf -m --ansi --prompt='delete branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d;\
+      git branch --sort=authordate | grep -v master | fzf -m --ansi --prompt='delete branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d;\
     elif [ $# -ge 1 ]; then\
-      git branch | grep ${@} | xargs git branch -d;\
+      git branch | grep -v master | grep ${@} | xargs git branch -d;\
     fi;\
   };f"
   ci = commit
   ca = commit --amend --date=now
+  # checkout with fzf
   co = "!f () {\
     if [ $# -eq 0 -a `which fzf` ]; then\
       git branch --sort=authordate | fzf --ansi --prompt='checkout\\> ' | tr -d ' \\*' | xargs -n 1 git checkout;\

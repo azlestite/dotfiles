@@ -35,8 +35,6 @@
       git branch | grep -v master | grep ${@} | xargs git branch -d;\
     fi;\
   };f"
-  ci = commit
-  ca = commit --amend --date=now
   # checkout with fzf
   co = "!f () {\
     if [ $# -eq 0 -a `which fzf` ]; then\
@@ -45,6 +43,8 @@
       git checkout ${@};\
     fi;\
   };f"
+  ci = commit
+  ca = commit --amend --date=now
   d = diff
   dc = diff --cached
   f = fetch

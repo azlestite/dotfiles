@@ -43,6 +43,14 @@
       git checkout ${@};\
     fi;\
   };f"
+  # merge branch with fzf
+  mb = "!f () {\
+    if [ `which fzf` ]; then\
+      git branch -a | grep -v '\\->' | sed -e 's/remotes\\///g' | fzf --ansi --layout=reverse --header='all-branch' --prompt='merge\\> ' --query=${@} | tr -d ' \\*' | xargs -n 1 git merge;\
+    elif [ $# -ge 1 ]; then\
+      git merge ${@};\
+    fi;\
+  };f"
   ci = commit
   ca = commit --amend --date=now
   d = diff

@@ -51,6 +51,14 @@
       git merge ${@};\
     fi;\
   };f"
+  # cherry-pick with fzf
+  cp = "!f () {\
+    if [ $# -eq 0 -a `which fzf` ]; then\
+      git log --branches --oneline | fzf -m --ansi --header='commit-log' --prompt='cherry-pick\\> ' | awk '{print $1}' | xargs git cherry-pick;\
+    elif [ $# -ge 1 ]; then\
+      git cherry-pick ${@};\
+    fi;\
+  };f"
   ci = commit
   ca = commit --amend --date=now
   d = diff

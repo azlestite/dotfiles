@@ -59,6 +59,10 @@
       git cherry-pick ${@};\
     fi;\
   };f"
+  # show merged branch except master and current branch
+  mg = "!f () {\
+    git branch --merged | grep -v master | grep -v '*';\
+  };f"
   ci = commit
   ca = commit --amend --date=now
   d = diff

@@ -63,6 +63,14 @@
   mg = "!f () {\
     git branch --merged | grep -v master | grep -v '*';\
   };f"
+  # delete merged branch(es) with fzf
+  mgd = "!f () {\
+    if [ $# -eq 0 -a `which fzf` ]; then\
+      git mg | fzf -m --ansi --layout=reverse --header='merged-branch' --prompt='delete branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d;\
+    elif [ $# -ge 1 ]; then\
+      git mg | grep ${@} | xargs git branch -d;\
+    fi;\
+  };f"
   ci = commit
   ca = commit --amend --date=now
   d = diff

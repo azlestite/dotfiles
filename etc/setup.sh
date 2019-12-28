@@ -48,10 +48,10 @@ info "Start installing dotfiles."
 if [ ! -d "$dot_dir" ]; then
   info "Installing dotfiles for the first time..."
   git clone git@github.com:azlestite/dotfiles.git "$dot_dir"
-else
-  info "The dotfiles already exists!!!"
-  info "Please delete dotfiles and run this script again."
-  exit 1
+#else
+#  info "The dotfiles already exists!!!"
+#  info "Please delete dotfiles and run this script again."
+#  exit 1
 fi
 
 # Setup OS packages

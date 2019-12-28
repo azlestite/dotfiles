@@ -49,10 +49,10 @@ export DOCKER_HOST="tcp://0.0.0.0:2375"
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-      . "$HOME/.bashrc"
+      source "$HOME/.bashrc"
     fi
 fi
 
 # Use Windows application
-export PATH="$PATH:/mnt/c/Program Files (x86)/Google/Chrome/Application"
-export BROWSER="chrome.exe"
+export PATH="$PATH:/mnt/c/Users/Manager/AppData/Local/Vivaldi/Application"
+export BROWSER="vivaldi.exe"

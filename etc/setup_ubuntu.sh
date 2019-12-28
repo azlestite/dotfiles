@@ -51,15 +51,15 @@ do
   sudo apt install -y $list
 done
 
-info "Install anyenv and *envs"
-source $dot_dir/etc/install/install_envs.sh
-
-if ! has nvim; then
-  echo
-  info "Neovim is not installed yet. installing..."
-  source $dot_dir/etc/install/install_neovim.sh
-  info "Installed Neovim."
-fi
+#info "Install anyenv and *envs"
+#source $dot_dir/etc/install/install_envs.sh
+#
+#if ! has nvim; then
+#  echo
+#  info "Neovim is not installed yet. installing..."
+#  source $dot_dir/etc/install/install_neovim.sh
+#  info "Installed Neovim."
+#fi
 
 info "Setup SSH and GnuPG settings..."
 ssh -V

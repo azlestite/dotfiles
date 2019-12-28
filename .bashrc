@@ -155,7 +155,7 @@ if [ -d "$HOME"/.anyenv ]; then
 fi
 
 # pipenv
-eval "$(pipenv --completion)"
+#eval "$(pipenv --completion)"
 
 # remove duplication PATH
 if declare -A &>/dev/null; then
@@ -200,6 +200,6 @@ if ! pgrep cron >/dev/null 2>&1; then
 fi
 
 # MySQL
-if ! pgrep -u mysql >/dev/null 2>&1; then
-  sudo service mysql start
-fi
+#if ! pgrep -u mysql >/dev/null 2>&1; then
+#  sudo service mysql start
+#fi

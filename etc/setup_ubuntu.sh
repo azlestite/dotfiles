@@ -6,19 +6,8 @@ set -Ceu -o pipefail
 
 source ${script_dir:-$(cd $(dirname ${BASH_SOURCE}) && pwd)}/util/include.sh
 
-umask 022
-
 cd
-sudo apt update && sudo apt upgrade -y
-mkdir -p local/src
-
-info "Backup ~/.* and /etc/* files and package list to ~/backup/*..."
-
-mkdir -p backup/first_time
-# sudo cp -rp .* /etc/* backup/first_time
-
-dpkg --get-selections > backup/dpkg-get-selections
-dpkg -l > backup/dpkg-list
+umask 022
 
 info "Change Ubuntu settings for Japanese..."
 
@@ -31,16 +20,26 @@ sudo wget https://www.ubuntulinux.jp/sources.list.d/bionic.list -O /etc/apt/sour
 sudo ln -sf /usr/share/zoneinfo/Japan /etc/localtime
 
 sudo apt update && sudo apt upgrade -y
+mkdir -p local/src
 
-info "Install latset git..."
+info "Backup ~/.* and /etc/* files and package list to ~/backup/*..."
+
+# mkdir -p backup/first_time
+# sudo cp -rp .* /etc/* backup/first_time
+
+mkdir backup
+dpkg --get-selections > backup/dpkg-get-selections
+dpkg -l > backup/dpkg-list
+
+info "Install latest git..."
 
 sudo add-apt-repository ppa:git-core/ppa
 sudo apt update
-sudo apt install git
+sudo apt install -y git
 git --version
 
 packagelist=(
-  "build-esential"
+  "build-essential"
   "automake"
   "xsel"
   "shellcheck"

@@ -5,8 +5,9 @@
 set -Ceu -o pipefail
 
 echo "--------- anyenv -----------------------"
-git clone https://github.com/riywo/anyenv $HOME/.anyenv
-exec $SHELL -l
+git clone https://github.com/anyenv/anyenv $HOME/.anyenv
+# exec $SHELL -l
+$HOME/.anyenv/bin/anyenv init
 
 any_root="$(anyenv root)"
 mkdir -p ${any_root}/plugins

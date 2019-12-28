@@ -15,7 +15,7 @@ mkdir -p local/src
 info "Backup ~/.* and /etc/* files and package list to ~/backup/*..."
 
 mkdir -p backup/first_time
-sudo cp -rp .* /etc/* backup/first_time
+# sudo cp -rp .* /etc/* backup/first_time
 
 dpkg --get-selections > backup/dpkg-get-selections
 dpkg -l > backup/dpkg-list

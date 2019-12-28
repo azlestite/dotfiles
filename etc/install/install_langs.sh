@@ -20,25 +20,25 @@ pip install --upgrade pip
 pip install pipenv
 echo "--------- END --------------------------"
 
-echo "--------- Node.js ----------------------"
-nodenv --version
-nodenv install -l
-node_latest=$(nodenv install -l | grep '^\s*[0-9].*' | tail -1 | sed 's/\s//g')
-nodenv install $node_latest
-nodenv global $node_latest
-nodenv rehash
-node -v
-npm -v
-echo "--------- END --------------------------"
+#echo "--------- Node.js ----------------------"
+#nodenv --version
+#nodenv install -l
+#node_latest=$(nodenv install -l | grep '^\s*[0-9].*' | tail -1 | sed 's/\s//g')
+#nodenv install $node_latest
+#nodenv global $node_latest
+#nodenv rehash
+#node -v
+#npm -v
+#echo "--------- END --------------------------"
 
-echo "--------- Go ----------------------"
-goenv --version
-goenv install -l
-go_latest=$(goenv install -l | grep -v '[a-z]' | tail -1 | sed 's/\s//g')
-goenv install $go_latest
-goenv global $go_latest
-goenv rehash
-go version
-echo "--------- END --------------------------"
+#echo "--------- Go ----------------------"
+#goenv --version
+#goenv install -l
+#go_latest=$(goenv install -l | grep -v '[a-z]' | tail -1 | sed 's/\s//g')
+#goenv install $go_latest
+#goenv global $go_latest
+#goenv rehash
+#go version
+#echo "--------- END --------------------------"
 
-exec $SHELL -l
+#exec $SHELL -l

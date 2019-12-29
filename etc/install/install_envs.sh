@@ -25,7 +25,7 @@ echo "--------- END --------------------------"
 echo "--------- *envs ------------------------"
 #$anyenv_bin install pyenv
 anyenv install pyenv
-eval "$($HOME/.anyenv/envs/pyenv/bin/pyenv init -)"
+#eval "$($HOME/.anyenv/envs/pyenv/bin/pyenv init -)"
 #eval "$(pyenv init -)"
 source ~/.profile
 #anyenv install nodenv
@@ -36,4 +36,4 @@ source ~/.profile
 echo "--------- END --------------------------"
 
 #source ./etc/install/install_langs.sh
-source $script_dir/install_langs.sh
+#source $script_dir/install_langs.sh

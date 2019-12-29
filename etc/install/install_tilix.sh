@@ -16,8 +16,9 @@ sudo mkdir -p /usr/share/fonts/truetype/myrica
 sudo cp /mnt/d/PTools/Fonts/Myrica*.ttf /usr/share/fonts/truetype/myrica/
 sudo fc-cache -fv
 
-# TilixのカラースキームをMolokaiにするためダウンロード
-wget -qO $HOME"/.config/tilix/schemes/molokai.json" https://git.io/v7QVE
+# TilixのカラースキームをMolokaiにするためダウンロード 
+# No such file or directory
+# wget -qO $HOME"/.config/tilix/schemes/molokai.json" https://git.io/v7QVE
 
 # fcitx-mozcのインストール
 sudo apt install -y fcitx-mozc

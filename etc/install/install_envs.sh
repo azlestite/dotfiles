@@ -25,11 +25,12 @@ echo "--------- END --------------------------"
 echo "--------- *envs ------------------------"
 #$anyenv_bin install pyenv
 anyenv install pyenv
+eval (pyenv init -)
 #anyenv install nodenv
 #anyenv install goenv
 
 #exec $SHELL -l
-source ~/.profile
+#source ~/.profile
 echo "--------- END --------------------------"
 
 #source ./etc/install/install_langs.sh

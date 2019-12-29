@@ -51,9 +51,9 @@ do
   sudo apt install -y $list
 done
 
-#info "Install anyenv and *envs"
-#source $dot_dir/etc/install/install_envs.sh
-#
+info "Install anyenv and *envs"
+source $dot_dir/etc/install/install_envs.sh
+
 #if ! has nvim; then
 #  echo
 #  info "Neovim is not installed yet. installing..."

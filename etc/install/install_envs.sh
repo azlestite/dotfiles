@@ -29,7 +29,7 @@ anyenv install pyenv
 #anyenv install goenv
 
 #exec $SHELL -l
-#source ~/.profile
+source ~/.profile
 echo "--------- END --------------------------"
 
 #source ./etc/install/install_langs.sh

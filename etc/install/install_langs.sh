@@ -4,22 +4,26 @@
 
 set -Ceu -o pipefail
 
-echo "--------- Python -----------------------"
+echo "--------- Python for NeoVim -----------------------"
 sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
   libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev
 pyenv --version
 #pyenv install -l
-python3_latest=$(pyenv install -l | grep -v '[a-z]' | tail -1 | sed 's/\s//g')
 python2_latest=$(pyenv install -l | grep -v '[a-z]' | grep '2.7.[0-9]*' | tail -1 | sed 's/\s//g')
-echo "Install python ${python3_latest}..."    
-pyenv install $python3_latest
+python3_latest=$(pyenv install -l | grep -v '[a-z]' | tail -1 | sed 's/\s//g')
 echo "Install python ${python2_latest}..."    
 pyenv install $python2_latest
-pyenv global $python3_latest
+echo "Install python ${python3_latest}..."    
+pyenv install $python3_latest
 pyenv rehash
+pyenv global $python2_latest
+pyenv which python
+pip install pynvim
+pyenv global $python3_latest
+pyenv which python
 python --version
 pip install --upgrade pip
-pip install pipenv
+pip install pipenv pynvim
 echo "--------- END --------------------------"
 
 #echo "--------- Node.js ----------------------"

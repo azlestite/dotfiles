@@ -8,7 +8,7 @@ echo "--------- Python for NeoVim -----------------------"
 sudo apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
   libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev
 pyenv --version
-source ~/.profile
+#source ~/.profile
 pyenv install -l
 pyenv --help
 #python2_latest=$(pyenv install -l | grep -v '[a-z]' | grep '2.7.[0-9]*' | tail -1 | sed 's/\s//g')

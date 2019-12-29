@@ -28,6 +28,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 export PATH="$HOME/.anyenv/bin:$PATH"
+export PATH="$HOME/.anyenv/envs/pyenv/bin:$PATH"
 
 export PIPENV_VENV_IN_PROJECT=1
 

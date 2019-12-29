@@ -7,6 +7,8 @@ set -Ceu -o pipefail
 sudo add-apt-repository -y ppa:webupd8team/terminix
 sudo apt update
 sudo apt install -y tilix
+# prevent "bash: /etc/profile.d/vte.sh: No such file or directory"
+sudo ln -s /etc/profile.d/vte-2.91.sh /etc/profile.d/vte.sh
 
 # dbus-x11が無いとPreferenceを設定できなかった
 sudo apt install -y dbus-x11 x11-xserver-utils

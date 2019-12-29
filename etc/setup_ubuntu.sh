@@ -60,9 +60,9 @@ echo
 gpg --version
 echo
 gpg-agent --version
-#mkdir -p ~/.ssh ~/.gnupg
-#chmod 700 ~/.ssh
-#chmod 700 ~/.gnupg
+mkdir -p ~/.ssh ~/.gnupg
+chmod 700 ~/.ssh
+chmod 700 ~/.gnupg
 info "Please create key according to next command."
 info "ssh-keygen -t ed25519 -C <YOUR_GITHUB_EMAIL> -f id_ed25519_github"
 info "Copy public key content to clipboard like next command."

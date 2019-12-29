@@ -54,6 +54,9 @@ if [ ! -d "$dot_dir" ]; then
 #  exit 1
 fi
 
+# Deploy
+source $script_dir/link.sh
+
 # Setup OS packages
 echo ""
 declare -a info=($(os_info))
@@ -73,7 +76,7 @@ ubuntu)
 esac
 
 # Deploy
-source $script_dir/link.sh
+#source $script_dir/link.sh
 
 echo ""
 info "Installation completed."

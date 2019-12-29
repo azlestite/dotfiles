@@ -44,5 +44,4 @@ echo "--------- END --------------------------"
 #echo "--------- END --------------------------"
 
 #exec $SHELL -l
-source ~/.profile
-
+#source ~/.profile

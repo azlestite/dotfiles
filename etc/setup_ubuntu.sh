@@ -4,10 +4,11 @@
 
 set -Ceu -o pipefail
 
+umask 022
+
 source ${script_dir:-$(cd $(dirname ${BASH_SOURCE}) && pwd)}/util/include.sh
 
 cd
-umask 022
 
 info "Change Ubuntu settings for Japanese..."
 
@@ -22,18 +23,17 @@ sudo ln -sf /usr/share/zoneinfo/Japan /etc/localtime
 sudo apt update && sudo apt upgrade -y
 mkdir -p local/src
 
-info "Backup ~/.* and /etc/* files and package list to ~/backup/*..."
+#info "Backup ~/.* and /etc/* files and package list to ~/backup/*..."
+info "Backup package list to ~/backup/first_time/*..."
 
-# mkdir -p backup/first_time
+mkdir -p backup/first_time
 # sudo cp -rp .* /etc/* backup/first_time
-
-mkdir backup
-dpkg --get-selections > backup/dpkg-get-selections
-dpkg -l > backup/dpkg-list
+dpkg --get-selections > backup/first_time/dpkg-get-selections
+dpkg -l > backup/first_time/dpkg-list
 
 info "Install latest git..."
 
-sudo add-apt-repository ppa:git-core/ppa
+sudo add-apt-repository -y ppa:git-core/ppa
 sudo apt update
 sudo apt install -y git
 git --version
@@ -63,13 +63,15 @@ done
 
 info "Setup SSH and GnuPG settings..."
 ssh -V
+echo
 gpg --version
+echo
 gpg-agent --version
 mkdir -p ~/.ssh ~/.gnupg
 chmod 700 ~/.ssh
 chmod 700 ~/.gnupg
 info "Please create key according to next command."
-info "ssh-keygen -t ed25519 -C YOUR_GITHUB_EMAIL -f id_ed25519_github"
+info "ssh-keygen -t ed25519 -C <YOUR_GITHUB_EMAIL> -f id_ed25519_github"
 info "Copy public key content to clipboard like next command."
 info "cat id_ed25519_github | xsel -bi"
 info "Resister to GitHub SSH Key setting."

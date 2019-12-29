@@ -22,6 +22,7 @@ sudo wget https://www.ubuntulinux.jp/sources.list.d/bionic.list -O /etc/apt/sour
 
 sudo ln -sf /usr/share/zoneinfo/Japan /etc/localtime
 
+echo '* libraries/restart-without-asking boolean true' | sudo debconf-set-selections
 sudo apt update && sudo apt upgrade -y
 mkdir -p local/src
 

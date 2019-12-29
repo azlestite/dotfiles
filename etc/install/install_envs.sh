@@ -26,7 +26,8 @@ echo "--------- *envs ------------------------"
 #$anyenv_bin install pyenv
 anyenv install pyenv
 #source ~/.profile
-eval "$($HOME/.anyenv/envs/pyenv/bin/pyenv init -)"
+#eval "$($HOME/.anyenv/envs/pyenv/bin/pyenv init -)"
+eval "$(pyenv init -)"
 #anyenv install nodenv
 #anyenv install goenv
 

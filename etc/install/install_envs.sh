@@ -36,4 +36,4 @@ eval "$(pyenv init -)"
 echo "--------- END --------------------------"
 
 #source ./etc/install/install_langs.sh
-source $script_dir/install_langs.sh
+#source $script_dir/install_langs.sh

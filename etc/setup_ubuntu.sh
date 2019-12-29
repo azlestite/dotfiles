@@ -51,16 +51,6 @@ do
   sudo apt install -y $list
 done
 
-info "Install anyenv and *envs"
-source $dot_dir/etc/install/install_envs.sh
-
-#if ! has nvim; then
-#  echo
-#  info "Neovim is not installed yet. installing..."
-#  source $dot_dir/etc/install/install_neovim.sh
-#  info "Installed Neovim."
-#fi
-
 info "Setup SSH and GnuPG settings..."
 ssh -V
 echo
@@ -78,3 +68,16 @@ info "Resister to GitHub SSH Key setting."
 info "Run connection test to GitHub with SSH."
 info "ssh -T git@github.com"
 info "Bitbucket can also be set in the same way."
+
+# Deploy
+source $script_dir/link.sh
+
+info "Install anyenv and *envs"
+source $dot_dir/etc/install/install_envs.sh
+
+#if ! has nvim; then
+#  echo
+#  info "Neovim is not installed yet. installing..."
+#  source $dot_dir/etc/install/install_neovim.sh
+#  info "Installed Neovim."
+#fi

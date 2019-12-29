@@ -13,8 +13,8 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/2.7.15/bin/python')
-let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/3.6.6/bin/python')
+let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/2.7.17/bin/python')
+let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/3.8.1/bin/python')
 
 set fileencoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,cp932

@@ -33,7 +33,7 @@ anyenv install pyenv
 
 #exec $SHELL -l
 #source ~/.profile
-echo "Next: ~/dotfiles/etc/install/install_langs.sh
+echo "Next: ~/dotfiles/etc/install/install_langs.sh"
 echo "--------- END --------------------------"
 exec $SHELL -l
 

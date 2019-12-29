@@ -75,6 +75,9 @@ info "Bitbucket can also be set in the same way."
 # Deploy
 source $script_dir/link.sh
 
+info "Install Tilix and fcitx-mozc..."
+source $dot_dir/etc/install/install_tilix.sh
+
 info "Install anyenv and *envs"
 source $dot_dir/etc/install/install_envs.sh
 

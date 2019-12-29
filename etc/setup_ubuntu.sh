@@ -6,7 +6,9 @@ set -Ceu -o pipefail
 
 umask 022
 
-source ${script_dir:-$(cd $(dirname ${BASH_SOURCE}) && pwd)}/util/include.sh
+script_dir="$(cd $(dirname ${BASH_SOURCE:-$0}); pwd)"
+source $script_dir/util/include.sh
+#source ${script_dir:-$(cd $(dirname ${BASH_SOURCE}) && pwd)}/util/include.sh
 
 cd
 

@@ -5,7 +5,7 @@
 set -Ceu -o pipefail
 
 cd $HOME/local/src
-version=3.12
+version=3.16
 build=1
 pkg=cmake-${version}.${build}
 wget -qO - https://cmake.org/files/v${version}/${pkg}.tar.gz | tar xvfz -

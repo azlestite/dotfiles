@@ -46,5 +46,6 @@ echo "--------- END --------------------------"
 #go version
 #echo "--------- END --------------------------"
 
-#exec $SHELL -l
 #source ~/.profile
+exec $SHELL -l
+echo "Next Command: ~/dotfiles/etc/install/install_neovim.sh"

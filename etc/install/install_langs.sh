@@ -47,5 +47,5 @@ echo "--------- END --------------------------"
 #echo "--------- END --------------------------"
 
 #source ~/.profile
-exec $SHELL -l
 echo "Next Command: ~/dotfiles/etc/install/install_neovim.sh"
+exec $SHELL -l

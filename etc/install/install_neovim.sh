@@ -13,4 +13,4 @@ nvim --version
 # for python modules
 sudo apt install -y python-dev python-pip python3-dev python3-pip
 # for cpsm
-sudo apt install cmake libboost-all-dev libicu-dev
+sudo apt install -y cmake libboost-all-dev libicu-dev

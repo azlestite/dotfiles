@@ -35,6 +35,7 @@ anyenv install pyenv
 #source ~/.profile
 echo "--------- END --------------------------"
 echo "Restart Shell..."
+echo "Close this window, start WSL with Tilix and run next command."
 echo "Next Command: ~/dotfiles/etc/install/install_langs.sh"
 exec $SHELL -l
 

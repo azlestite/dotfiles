@@ -4,7 +4,7 @@
 
 set -Ceu -o pipefail
 
-sudo apt -y install python-docutils
+sudo apt install -y python-docutils
 cd $HOME/local/src
 git clone https://github.com/universal-ctags/ctags.git
 cd ctags

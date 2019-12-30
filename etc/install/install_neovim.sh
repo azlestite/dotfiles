@@ -6,7 +6,7 @@ set -Ceu -o pipefail
 
 sudo apt install -y software-properties-common
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
-sudo apt update -q
+sudo apt update -qq
 sudo apt install -y neovim
 nvim --version
 #sudo apt install -y python-dev python-pip python3-dev python3-pip

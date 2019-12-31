@@ -1,5 +1,4 @@
 # use colors on terminal
-echo "color_output.sh"
 tput=$(which tput)
 
 if [ -n "$tput" ]; then

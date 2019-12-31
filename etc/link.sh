@@ -10,6 +10,16 @@ echo ""
 info "Create symbolic links..."
 echo ""
 
+if [ -d "$HOME/.ssh"]; then
+  mkdir -p "$HOME/.ssh"
+  chmod 700 "$HOME/.ssh"
+fi
+
+if [ -d "$HOME/.gnupg"]; then
+  mkdir -p "$HOME/.gnupg"
+  chmod 700 "$HOME/.gnupg"
+fi
+
 cd $dot_dir
 
 array=(".config" ".gnupg" ".ssh" ".tmux")

@@ -24,11 +24,11 @@ do
   done
 
   symlink "$dot_dir/$f" "$HOME/$f"
-  echo "$f"
+  #echo "$f"
 
-  if [ $? -eq 0 ]; then
-    printf "  %-25s -> %s\n" "\$dotfiles/$f" "\$HOME/$f"
-  fi
+  #if [ $? -eq 0 ]; then
+  #  printf "  %-25s -> %s\n" "\$HOME/$f" "\$dotfiles/$f"
+  #fi
 done
 
 for d in "${array[@]}"

@@ -2,6 +2,8 @@
 
 set -Ceuo pipefail
 
+echo "run_once_before_01-extract-backup-files.sh"
+
 # extract backup files
 if [ -f ~/gnupg_with_sshcontrol.tar.gz ]; then
   tar xzf ~/gnupg_with_sshcontrol.tar.gz -C ~/

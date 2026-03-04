@@ -1,0 +1,18 @@
+Host github.com
+  HostName github.com
+  User git
+  Port 22
+  TCPKeepAlive yes
+
+Host bitbucket.org
+  HostName bitbucket.org
+  User git
+  Port 22
+  TCPKeepAlive yes
+
+Host raspi
+  HostName 192.168.0.9
+  User azlestite
+  #Port 55555
+
+Match host * exec "gpg-connect-agent updatestartuptty /bye"

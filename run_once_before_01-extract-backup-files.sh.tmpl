@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -Ceuo pipefail
+
+# extract backup files
+if [ -f ~/gnupg_with_sshcontrol.tar.gz ]; then
+  tar xzf ~/gnupg_with_sshcontrol.tar.gz -C ~/
+fi
+
+if [ -f ~/ssh_with_gpg.tar.gz ]; then
+  tar xzf ~/ssh_with_gpg.tar.gz -C ~/
+fi

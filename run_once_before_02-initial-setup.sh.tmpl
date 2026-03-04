@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -Ceuo pipefail
+
+# locale
+sudo locale-gen en_US.UTF-8
+sudo localectl set-locale LANG=en_US.UTF-8
+
+# timezone
+sudo timedatectl set-timezone Asia/Tokyo
+
+# apt repository
+sudo sed -i.bak -r 's@http://(jp\.)?archive\.ubuntu\.com/ubuntu/?@https://ftp.udx.icscoe.jp/Linux/ubuntu/@g' /etc/apt/sources.list.d/ubuntu.sources
+sudo apt update && sudo apt upgrade -y
+
+# install packages
+{{- if eq .chezmoi.os "linux" }}
+{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+read -r -d '' PACKAGES <<EOF
+build-essential
+pkg-config
+libssl-dev
+cmake
+wl-clipboard
+EOF
+
+for package in `echo $PACKAGES`; do
+  sudo apt install -y $package
+done
+{{- end }}
+{{- end }}

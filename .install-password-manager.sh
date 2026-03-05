@@ -12,12 +12,10 @@ Linux)
     if [ "$(uname -m)" = "x86_64" ]; then
         sudo apt install -y unzip
         mkdir -p $HOME/.local/{bin,src}
-        # version=2026.1.0
-        # curl -Lo $HOME/.local/src/bw-linux.zip https://github.com/bitwarden/clients/releases/download/cli-v${version}/bw-linux-${version}.zip
         curl -fsSL "https://bitwarden.com/download/?app=cli&platform=linux" -o $HOME/.local/src/bw-linux.zip
         unzip $HOME/.local/src/bw-linux.zip -d $HOME/.local/bin/
         chmod +x $HOME/.local/bin/bw
-        # rm -rf $HOME/.local/src/bw-linux.zip
+        rm -rf $HOME/.local/src/bw-linux.zip
     fi
     ;;
 Darwin)

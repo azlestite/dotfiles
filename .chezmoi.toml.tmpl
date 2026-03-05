@@ -3,4 +3,6 @@ command = "code"
 args = ["--wait"]
 
 [hooks.read-source-state.pre]
-command = ".local/share/chezmoi/.install-password-manager.sh"
+# command = ".local/share/chezmoi/.install-password-manager.sh"
+command = "sh"
+args = ["-c", "$HOME/.local/share/chezmoi/.install-password-manager.sh"]

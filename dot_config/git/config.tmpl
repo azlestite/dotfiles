@@ -1,0 +1,148 @@
+[init]
+  defaultBranch = main
+[user]
+  name = {{ (bitwardenFields "item" "https://github.com/").NAME.value }}
+  email = {{ (bitwardenFields "item" "https://github.com/").EMAIL.value }}
+  signingkey = {{ (bitwardenFields "item" "https://github.com/").SIGNINGKEY.value }}
+  useConfigOnly = true
+[user "https://bitbucket.org/"]
+  name = {{ (bitwardenFields "item" "https://bitbucket.org/").NAME.value }}
+  email = {{ (bitwardenFields "item" "https://bitbucket.org/").EMAIL.value }}
+[core]
+  autocrlf = false
+  safecrlf = true
+  quotepath = false
+  filemode = true
+  ignorecase = false
+  editor = vi
+[commit]
+  verbose = true
+  gpgsign = true
+[fetch]
+  prune = true
+[merge]
+  ff = false
+  conflictStyle = zdiff3
+[pull]
+  ff = only
+[push]
+	default = current
+[rebase]
+  autostash = true
+  autosquash = true
+[grep]
+  lineNumber = true
+[gpg]
+  program = gpg
+[ghq]
+  root = ~/ghq
+[alias]
+  alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/g' | sort
+  aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+  a = add
+  ap = add --patch
+  b = branch
+  bb = branch -vv --all
+  # show merged branches except main, master, develop and current branch
+  bm = "!f () { \
+    git branch --merged | grep -v '^*\\|main$\\|master$\\|develop$'; \
+  };f"
+  # delete branches with fzf
+  bd = "!f () { \
+    if [ $# -eq 0 -a `which fzf` ]; then \
+      git branch --sort=authordate | grep -v 'main$\\|master$\\|develop$' | fzf -m --ansi --prompt='delete branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d; \
+    elif [ $# -ge 1 ]; then \
+      git branch | grep -v 'main$\\|master$\\|develop$' | grep ${@} | xargs git branch -d; \
+    fi; \
+  };f"
+  # delete merged branches with fzf
+  bdm = "!f () { \
+    if [ $# -eq 0 -a `which fzf` ]; then \
+      git bm | fzf -m --ansi --layout=reverse --header='merged-branch' --prompt='delete merged branch(es)\\> ' | tr -d ' \\*' | xargs git branch -d; \
+    elif [ $# -ge 1 ]; then \
+      git bm | grep ${@} | xargs git branch -d; \
+    fi; \
+  };f"
+  c = commit
+  ca = commit --amend --date=now
+  cm = commit --message
+  # checkout with fzf
+  co = "!f () { \
+    if [ $# -eq 0 -a `which fzf` ]; then \
+      git branch --sort=authordate | fzf --ansi --prompt='checkout\\> ' | tr -d ' \\*' | xargs -n 1 git checkout; \
+    elif [ $# -ge 1 ]; then \
+      git checkout ${@}; \
+    fi; \
+  };f"
+  # cherry-pick with fzf
+  cp = "!f () { \
+    if [ $# -eq 0 -a `which fzf` ]; then \
+      git log --branches --oneline | fzf -m --ansi --header='commit-log' --prompt='cherry-pick\\> ' | awk '{print $1}' | xargs git cherry-pick; \
+    elif [ $# -ge 1 ]; then \
+      git cherry-pick ${@}; \
+    fi; \
+  };f"
+  d = diff
+  dc = diff --cached
+  f = fetch
+  g = grep
+  l = log --graph --topo-order --numstat --date=format:'%Y-%m-%d %H:%M:%S' --decorate --all --boundary --pretty=format:'%Cblue%ad %C(auto)%h%Creset %C(auto)%d%Creset %Cblue[%cn]%Creset %Cblue%G?%Creset%n%C(cyan bold)%w(70)%s%n%w(74,2,2)%b'
+  ll = log-list
+  lll = log-list-long
+  log-list = log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cblue%ad %C(auto)%h%Creset -%C(auto)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+  log-list-long = log --graph --topo-order --date=iso8601-strict --no-abbrev-commit --decorate --all --boundary --pretty=format:'%Cblue%ad %C(auto)%h%Creset -%C(auto)%d%Creset %s %Cblue[%cn <%ce>]%Creset %Cblue%G?%Creset'
+  lf = log --pretty=fuller
+  ls = ls-files
+  m = merge
+  # merge branch with fzf
+  mb = "!f () { \
+    if [ `which fzf` ]; then \
+      git branch -a | grep -v '\\->' | sed -e 's/remotes\\///g' | fzf --ansi --layout=reverse --header='all-branch' --prompt='merge\\> ' --query=${@} | tr -d ' \\*' | xargs -n 1 git merge;\
+    elif [ $# -ge 1 ]; then \
+      git merge ${@}; \
+    fi; \
+  };f"
+  pu = pull
+  ps = push
+  psf = push --force-with-lease --force-if-includes
+  rb = rebase
+  rl = reflog
+  remotes = remote -v
+  rv = revert
+  s = status
+  ss = status --short --branch
+  sw = switch
+  swc = switch -c
+  url = config --get remote.origin.url
+  w = whatchanged
+  reset-commit = reset --soft HEAD~1
+  reset-commit-hard = reset --hard HEAD~1
+  reset-commit-hard-clean = !git reset --hard HEAD~1 && git clean -fd
+  # summary
+  log-of-count-and-format = "!f() { format=\"$1\"; shift; git log $@ --format=oneline --format="$format" | awk '{a[$0]++}END{for(i in a){print a[i], int((a[i]/NR)*100) \"%\", i}}' | sort -nr; }; f"
+  log-of-count-and-format-with-date = "!f() { format=\"$1\"; shift; date_format=\"$1\"; shift; git log $@ --format=oneline --format=\"$format\" --date=format:\"$date_format\" | awk '{a[$0]++}END{for(i in a){print a[i], int((a[i]/NR)*100) \"%\", i}}' | sort -nr; }; f"
+  log-of-count-and-email = "!f() { git log-of-count-and-format \"%aE\" $@; }; f"
+  log-of-count-and-day = "!f() { git log-of-count-and-format-with-date \"%ad\" \"%Y-%m-%d\" $@ ; }; f"
+  churn = !"f() { git log --all --find-copies --find-renames --name-only --format='format:' \"$@\" | awk 'NF{a[$0]++}END{for(i in a){print a[i], i}}' | sort -rn;};f"
+  summary = "!f() { \
+    printf \"Summary of this branch...\n\"; \
+    printf \"%s\n\" $(git rev-parse --abbrev-ref HEAD); \
+    printf \"%s first commit timestamp\n\" $(git log --date-order --format=%cI | tail -1); \
+    printf \"%s last commit timestamp\n\" $(git log -1 --date-order --format=%cI); \
+    printf \"\nSummary of counts...\n\"; \
+    printf \"%d commit count\n\" $(git rev-list --count HEAD); \
+    printf \"%d date count\n\" $(git log --format=oneline --format=\"%ad\" --date=format:\"%Y-%m-%d\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d tag count\n\" $(git tag | wc -l); \
+    printf \"%d author count\n\" $(git log --format=oneline --format=\"%aE\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d committer count\n\" $(git log --format=oneline --format=\"%cE\" | awk '{a[$0]=1}END{for(i in a){n++;} print n}'); \
+    printf \"%d local branch count\n\" $(git branch | grep -v \" -> \" | wc -l); \
+    printf \"%d remote branch count\n\" $(git branch -r | grep -v \" -> \" | wc -l); \
+    printf \"\nSummary of this directory...\n\"; \
+    printf \"%s\n\" $(pwd); \
+    printf \"%d file count via git ls-files\n\" $(git ls-files | wc -l); \
+    printf \"%d file count via find command\n\" $(find . | wc -l); \
+    printf \"%d disk usage\n\" $(du -s | awk '{print $1}'); \
+    printf \"\nMost-active authors, with commit count and %%...\n\"; git log-of-count-and-email | head -7; \
+    printf \"\nMost-active dates, with commit count and %%...\n\"; git log-of-count-and-day | head -7; \
+    printf \"\nMost-active files, with churn count\n\"; git churn | head -7; \
+  }; f"

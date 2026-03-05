@@ -18,9 +18,9 @@ sudo apt update && sudo apt upgrade -y
 {{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 packages=(
   "build-essential"
-  # "pkg-config"
-  # "libssl-dev"
-  # "cmake"
+  "pkg-config"
+  "libssl-dev"
+  "cmake"
   "wl-clipboard"
 )
 

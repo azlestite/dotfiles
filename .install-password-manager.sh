@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -Ceuo pipefail
+
 # exit immediately if password-manager-binary is already in $PATH
 type bw >/dev/null 2>&1 && exit
 
@@ -9,9 +11,10 @@ Linux)
     echo "Install Bitwarden CLI..."
     if [ "$(uname -m)" = "x86_64" ]; then
         sudo apt install -y unzip
-        version=2026.1.0
         mkdir -p $HOME/.local/{bin,src}
-        curl -Lo $HOME/.local/src/bw-linux.zip https://github.com/bitwarden/clients/releases/download/cli-v${version}/bw-linux-${version}.zip
+        # version=2026.1.0
+        # curl -Lo $HOME/.local/src/bw-linux.zip https://github.com/bitwarden/clients/releases/download/cli-v${version}/bw-linux-${version}.zip
+        curl -fsSL "https://bitwarden.com/download/?app=cli&platform=linux" -o $HOME/.local/src/bw-linux.zip
         unzip $HOME/.local/src/bw-linux.zip -d $HOME/.local/bin/
         chmod +x $HOME/.local/bin/bw
         # rm -rf $HOME/.local/src/bw-linux.zip

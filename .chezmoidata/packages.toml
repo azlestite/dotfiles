@@ -1,0 +1,12 @@
+[packages.apt]
+to_remove = []
+[packages.apt.base]
+packages = [
+  "build-essential",
+  "pkg-config",
+  "libssl-dev",
+  "cmake",
+  "wl-clipboard",
+]
+[packages.apt.extra]
+packages = ["jq"]

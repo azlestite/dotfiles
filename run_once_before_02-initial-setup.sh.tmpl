@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 
 set -Ceuo pipefail
@@ -14,18 +15,19 @@ sudo sed -i.bak -r 's@http://(jp\.)?archive\.ubuntu\.com/ubuntu/?@https://ftp.ud
 sudo apt update && sudo apt upgrade -y
 
 # install packages
-{{- if eq .chezmoi.os "linux" }}
-{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 packages=(
-  "build-essential"
-  "pkg-config"
-  "libssl-dev"
-  "cmake"
-  "wl-clipboard"
+    {{ range $package := .packages.apt.base.packages }}
+    "{{ $package }}"
+    {{ end }}
+    {{ if .full_setup }}
+    {{ range $package := .packages.apt.extra.packages }}
+    "{{ $package }}"
+    {{ end }}
+    {{ end }}
 )
 
 for package in "${packages[@]}"; do
   sudo apt install -y $package
 done
-{{- end }}
+
 {{- end }}

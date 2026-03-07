@@ -15,6 +15,7 @@ sudo sed -i.bak -r 's@http://(jp\.)?archive\.ubuntu\.com/ubuntu/?@https://ftp.ud
 sudo apt update && sudo apt upgrade -y
 
 # install packages
+info "Install packages..."
 packages=(
     {{ range $package := .packages.apt.base.packages }}
     "{{ $package }}"

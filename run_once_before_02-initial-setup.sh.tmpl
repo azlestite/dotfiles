@@ -3,6 +3,8 @@
 
 set -Ceuo pipefail
 
+{{ template "utils.sh" . }}
+
 # locale
 sudo locale-gen en_US.UTF-8
 sudo localectl set-locale LANG=en_US.UTF-8

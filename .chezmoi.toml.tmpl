@@ -13,5 +13,7 @@ full_setup = {{ $full_setup }}
 command = "code"
 args = ["--wait"]
 
-# [hooks.read-source-state.pre]
+[hooks.read-source-state.pre]
 # command = ".local/share/chezmoi/.install-prerequisite-packages.sh"
+command = "source"
+args = ["~/.local/share/chezmoi/.install-prerequisite-packages.sh"]

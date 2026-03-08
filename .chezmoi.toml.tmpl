@@ -6,6 +6,9 @@ encryption = "age"
 identity = "~/.config/chezmoi/key.txt"
 recipient = "age1ata5efwdcdeg98ts0aqvmhkrawu38k8vevz6cuwaw4c3frhgpd4s8u86k7"
 
+[bitwarden]
+unlock = "auto"
+
 [data]
 full_setup = {{ $full_setup }}
 
@@ -15,5 +18,4 @@ args = ["--wait"]
 
 [hooks.read-source-state.pre]
 # command = ".local/share/chezmoi/.install-prerequisite-packages.sh"
-command = "source"
-args = ["~/.local/share/chezmoi/.install-prerequisite-packages.sh"]
+script = ".local/share/chezmoi/.install-prerequisite-packages.sh"

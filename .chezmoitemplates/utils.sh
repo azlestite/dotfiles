@@ -108,7 +108,7 @@ os_info() {
   echo $(os_type) $(os_bit)
 }
 
-# determine if this OS is wsl.
+# determine if this OS is wsl
 is_wsl() {
   if [[ $(uname -r) =~ Microsoft ]]; then
     echo 0

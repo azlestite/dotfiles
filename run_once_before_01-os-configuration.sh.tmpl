@@ -2,11 +2,16 @@
 
 set -Ceuo pipefail
 
-# # extract backup files
-# if [ -f ~/gnupg_with_sshcontrol.tar.gz ]; then
-#   tar xzf ~/gnupg_with_sshcontrol.tar.gz -C ~/
-# fi
+{{ template "utils.sh" . }}
 
-# if [ -f ~/ssh_with_gpg.tar.gz ]; then
-#   tar xzf ~/ssh_with_gpg.tar.gz -C ~/
-# fi
+info "Set OS configuration..."
+
+# locale
+sudo locale-gen en_US.UTF-8
+sudo localectl set-locale LANG=en_US.UTF-8
+
+# timezone
+sudo timedatectl set-timezone Asia/Tokyo
+
+# apt repository
+sudo sed -i.bak -r 's@http://(jp\.)?archive\.ubuntu\.com/ubuntu/?@https://ftp.udx.icscoe.jp/Linux/ubuntu/@g' /etc/apt/sources.list.d/ubuntu.sources

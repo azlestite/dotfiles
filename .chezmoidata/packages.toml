@@ -6,6 +6,7 @@ packages = [
   "pkg-config",
   "libssl-dev",
   "cmake",
+  "ca-certificates",
   "wl-clipboard",
 ]
 [packages.apt.extra]

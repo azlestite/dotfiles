@@ -144,6 +144,15 @@ function remove_duplicate_paths() {
   fi
 }
 
+# Use ssh-agent
+# SSH_AGENT_FILE=$HOME/.ssh-agent
+# test -f $SSH_AGENT_FILE && source $SSH_AGENT_FILE
+# if ! ssh-add -l >/dev/null 2>&1; then
+#   ssh-agent > $SSH_AGENT_FILE
+#   source $SSH_AGENT_FILE
+#   ssh-add $HOME/.ssh/id_{ed25519,ed25519_sign}
+# fi
+
 # Use gpg-agent instead of ssh-agent
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
   gpg-connect-agent /bye >/dev/null 2>&1

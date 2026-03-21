@@ -32,10 +32,9 @@ curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-arc
 # echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 sudo tee /etc/apt/sources.list.d/mise.sources <<EOF
 Types: deb
-URIs: https://mise.jdx.dev
+URIs: https://mise.jdx.dev/deb
 Suites: stable
 Components: main
-Architectures: $(dpkg --print-architecture)
 Signed-By: /usr/share/keyrings/mise-archive-keyring.gpg
 EOF
 

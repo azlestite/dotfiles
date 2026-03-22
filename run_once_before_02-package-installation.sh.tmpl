@@ -24,23 +24,6 @@ for package in "${packages[@]}"; do
   sudo apt install -y $package
 done
 
-# Install mise
-info "Install mise..."
-sudo apt update
-sudo install -dm 755 /etc/apt/keyrings
-curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1> /dev/null
-# echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
-sudo tee /etc/apt/sources.list.d/mise.sources <<EOF
-Types: deb
-URIs: https://mise.jdx.dev/deb
-Suites: stable
-Components: main
-Signed-By: /etc/apt/keyrings/mise-archive-keyring.asc
-EOF
-
-sudo apt update
-sudo apt install -y mise
-
 # Install Docker
 # https://docs.docker.com/engine/install/ubuntu/
 info "Install docker..."

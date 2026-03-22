@@ -168,5 +168,8 @@ export GPG_TTY=$(tty)
 # mise
 eval "$(mise activate bash)"
 
+# Starship
+eval "$(starship init bash)"
+
 # Remove duplicate $PATH entries
 remove_duplicate_paths

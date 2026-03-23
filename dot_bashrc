@@ -171,5 +171,19 @@ eval "$(mise activate bash)"
 # Starship
 eval "$(starship init bash)"
 
+# alias
+# alias ll='ls -alF'
+# alias la='ls -A'
+# alias l='ls -CF'
+if type eza >/dev/null 2>&1; then
+  alias ls='eza --icons=auto'
+  alias l='eza -F=auto --icons=auto --group-directories-first'
+  alias la='eza -a -F=auto --icons=auto --group-directories-first'
+  alias ll='eza -l -ahg -F=auto --icons=auto --git --git-repos --group-directories-first'
+  alias llt='eza -l -T -ahg -I=".git|node_modules|.cache" -F=auto --icons=auto --git --git-repos --group-directories-first'
+  alias lt='eza -T -ahg -I=".git|node_modules|.cache" -F=auto --icons=auto --git --git-repos --group-directories-first'
+  alias ltl=llt
+fi
+
 # Remove duplicate $PATH entries
 remove_duplicate_paths

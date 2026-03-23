@@ -120,6 +120,10 @@ fi
 # Custom
 # ------------------------------------------------------------------------------
 
+#-----------#
+# Functions #
+#-----------#
+
 # Remove duplicate $PATH entries
 function remove_duplicate_paths() {
   if declare -A &>/dev/null; then
@@ -144,6 +148,17 @@ function remove_duplicate_paths() {
   fi
 }
 
+# Change directory of a git repository managed by ghq using fzf
+function change-git-repository-with-fzf () {
+  local WORKDIR=$(ghq list -p | fzf --preview "onefetch --no-art --no-color-palette {}")
+  [ -z "$WORKDIR" ] && return
+  cd $WORKDIR
+}
+
+#-------------#
+# SSH and GPG #
+#-------------#
+
 # Use ssh-agent
 # SSH_AGENT_FILE=$HOME/.ssh-agent
 # test -f $SSH_AGENT_FILE && source $SSH_AGENT_FILE
@@ -165,6 +180,10 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 fi
 export GPG_TTY=$(tty)
 
+#-------------#
+# Activations #
+#-------------#
+
 # mise
 eval "$(mise activate bash)"
 
@@ -173,7 +192,6 @@ eval "$(starship init bash)"
 
 # fzf
 eval "$(fzf --bash)"
-# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 # Search files that include hidden files and symbolic links, but exclude those in .gitignore
 __fzf_fd_files_cmd="fd --type f --strip-cwd-prefix --hidden --follow"
@@ -199,7 +217,6 @@ FZF_DEFAULT_OPTS="
   --bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'
 "
 
-# プレースホルダー内の記法はFIELD INDEX EXPRESSION
 FZF_CTRL_R_OPTS="
   --preview 'echo {} | bat --color=always --language=sh --style=plain' \
   --preview-window 'down,40%,wrap' \
@@ -241,14 +258,10 @@ export FZF_ALT_C_OPTS
 export FZF_TMUX=1
 export FZF_TMUX_OPTS="-p 90%"
 
-# ghq管理のGitリポジトリをfzfを使用して移動
-function change-git-repository-with-fzf () {
-  local WORKDIR=$(ghq list -p | fzf --preview "onefetch --no-art --no-color-palette {}")
-  [ -z "$WORKDIR" ] && return
-  cd $WORKDIR
-}
+#---------#
+# Aliases #
+#---------#
 
-# alias
 if type eza >/dev/null 2>&1; then
   alias ls='eza --icons=auto'
   alias l='eza -F=auto --icons=auto --group-directories-first'
@@ -260,6 +273,10 @@ if type eza >/dev/null 2>&1; then
 fi
 
 alias cgr='change-git-repository-with-fzf'
+
+#--------#
+# Others #
+#--------#
 
 # Remove duplicate $PATH entries
 remove_duplicate_paths

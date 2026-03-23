@@ -172,7 +172,8 @@ eval "$(mise activate bash)"
 eval "$(starship init bash)"
 
 # fzf
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
+eval "$(fzf --bash)"
+# [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.bash
 
 # Search files that include hidden files and symbolic links, but exclude those in .gitignore
 __fzf_fd_files_cmd="fd --type f --strip-cwd-prefix --hidden --follow"

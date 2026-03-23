@@ -198,13 +198,11 @@ if command -v fzf >/dev/null 2>&1; then
     [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh
 fi
 
-# lazygit
-alias lg='lazygit'
-
 #---------#
 # Aliases #
 #---------#
 
+# eza
 if type eza >/dev/null 2>&1; then
   alias ls='eza --icons=auto'
   alias l='eza -F=auto --icons=auto --group-directories-first'
@@ -215,9 +213,13 @@ if type eza >/dev/null 2>&1; then
   alias ltl=llt
 fi
 
+# ghq and fzf
 if command -v "ghq" >/dev/null 2>&1 && command -v "fzf" >/dev/null 2>&1; then
   alias cgr='change-git-repository-with-fzf'
 fi
+
+# lazygit
+alias lg='lazygit'
 
 #--------#
 # Others #

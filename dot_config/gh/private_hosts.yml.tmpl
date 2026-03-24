@@ -1,0 +1,7 @@
+github.com:
+    users:
+        {{ (bitwardenFields "item" "https://github.com/").NAME.value }}:
+            oauth_token: {{ (bitwardenFields "item" "https://github.com/").OAUTH_TOKEN.value }}
+    git_protocol: ssh
+    oauth_token: {{ (bitwardenFields "item" "https://github.com/").OAUTH_TOKEN.value }}
+    user: {{ (bitwardenFields "item" "https://github.com/").NAME.value }}

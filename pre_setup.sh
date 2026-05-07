@@ -17,7 +17,7 @@ function install_prerequisite_packages() {
   if command -v bw >/dev/null 2>&1; then
     echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
 
-    if [[ -z "${BW_SESSION}" ]]; then
+    if [[ -z "${BW_SESSION:-}" ]]; then
       echo "BW_SESSION is not set. Unlock Bitwarden CLI..."
       login_and_unlock_bitwarden_cli
     else

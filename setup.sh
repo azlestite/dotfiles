@@ -148,34 +148,52 @@ function check_prerequisite_packages() {
 
 }
 
-# function install_bitwarden_cli() {
-#   mkdir -p "${HOME}"/.local/{bin,src}
-#   curl -fsSL "https://bitwarden.com/download/?app=cli&platform=linux" -o "${HOME}"/.local/src/bw-linux.zip
-#   unzip "${HOME}"/.local/src/bw-linux.zip -d "${HOME}"/.local/bin/
-#   chmod +x "${HOME}"/.local/bin/bw
-#   rm -rf "${HOME}"/.local/src/bw-linux.zip
+function install_prerequisite_packages() {
+  sudo apt update
+  sudo apt install -y curl git unzip wget
 
-#   export PATH="$HOME/.local/bin:$PATH"
-#   # source $HOME/.profile
-#   bw login
-#   bw sync
-#   BW_SESSION="$(bw unlock --raw)"
-#   export BW_SESSION
-# }
+  if command -v bw >/dev/null 2>&1; then
+    echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
 
-# function login_bitwarden_cli() {
-#   bw login
-#   bw sync
-#   BW_SESSION="$(bw unlock --raw)"
-#   export BW_SESSION
-# }
+    if [[ -z "${BW_SESSION:-}" ]]; then
+      echo "BW_SESSION is not set. Unlock Bitwarden CLI..."
+      login_and_unlock_bitwarden_cli
+    else
+      echo "BW_SESSION is already set. Skipping..."
+    fi
+  else
+    install_bitwarden_cli
+  fi
+}
+
+function install_bitwarden_cli() {
+  mkdir -p "${HOME}"/.local/{bin,src}
+  curl -fsSL "https://bitwarden.com/download/?app=cli&platform=linux" -o "${HOME}"/.local/src/bw-linux.zip
+  unzip "${HOME}"/.local/src/bw-linux.zip -d "${HOME}"/.local/bin/
+  chmod +x "${HOME}"/.local/bin/bw
+  rm -rf "${HOME}"/.local/src/bw-linux.zip
+
+  export PATH="$HOME/.local/bin:$PATH"
+  # source $HOME/.profile
+  login_and_unlock_bitwarden_cli
+}
+
+function login_and_unlock_bitwarden_cli() {
+  bw login
+  bw sync
+  BW_SESSION="$(bw unlock --raw)"
+  export BW_SESSION
+}
 
 function main() {
   echo "${DOTFILES_LOGO}"
 
-  check_prerequisite_packages
+  # check_prerequisite_packages
+
+  install_prerequisite_packages
 
   initialize_dotfiles
+  echo "BW_SESSION: ${BW_SESSION}"
 
   # restart_shell # Disabled because the at_exit function does not work properly.
 

@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Install mise.
+#
+# shellcheck disable=SC1009,SC1054,SC1056,SC1072,SC1073,SC1083
+
+set -Ceuo pipefail
+
+# {{- if eq .chezmoi.os "linux" }}
+
+{{ template "utils.sh" . }}
+
+info "Install mise..."
+# sudo apt update
+# sudo install -dm 755 /etc/apt/keyrings
+# curl -fSs https://mise.jdx.dev/gpg-key.pub \
+#   | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1>/dev/null
+# sudo tee /etc/apt/sources.list.d/mise.sources <<EOF
+# Types: deb
+# URIs: https://mise.jdx.dev/deb
+# Suites: stable
+# Components: main
+# Signed-By: /etc/apt/keyrings/mise-archive-keyring.asc
+# EOF
+
+# sudo apt update
+# sudo apt install -y mise
+
+# # Temporary activation for current script session
+# # eval "$(mise activate --shims)"
+# mise install
+
+# {{- end }}

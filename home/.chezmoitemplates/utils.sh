@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+#
 # import common settings and utility functions
 
 _set_colors() {
@@ -18,7 +20,9 @@ _set_colors() {
     RED=""
     GREEN=""
     YELLOW=""
+    # shellcheck disable=SC2034
     BLUE=""
+    # shellcheck disable=SC2034
     BOLD=""
     NORMAL=""
   fi
@@ -27,16 +31,19 @@ _set_colors() {
 _set_colors
 
 info() {
-  printf "${GREEN}INFO  ${NORMAL}"
+  # shellcheck disable=SC2059
+  printf "${GREEN}INFO ${NORMAL}"
   echo "$1"
 }
 
 warn() {
-  printf "${YELLOW}WARN  ${NORMAL}"
+  # shellcheck disable=SC2059
+  printf "${YELLOW}WARN ${NORMAL}"
   echo "$1"
 }
 
 error() {
+  # shellcheck disable=SC2059
   printf "${RED}ERROR ${NORMAL}"
   echo "$1"
 }
@@ -95,17 +102,17 @@ os_type() {
     os_name="unkown"
   fi
 
-  echo ${os_name}
+  echo "${os_name}"
 }
 
 # get OS bit(32bit => i686, 64bit => x86_64)
 os_bit() {
-  echo $(uname -m)
+  uname -m
 }
 
 # get OS distribution and bit
 os_info() {
-  echo $(os_type) $(os_bit)
+  echo "$(os_type) $(os_bit)"
 }
 
 # determine if this OS is wsl

@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 case $- in
   *i*) ;;
-    *) return;;
+  *) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-  xterm-color|*-256color) color_prompt=yes;;
+  xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -65,15 +65,15 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-  xterm*|rxvt*)
+  xterm* | rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
-  *)
-    ;;
+  *) ;;
 esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
+  # shellcheck disable=SC2015
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
   #alias dir='dir --color=auto'
@@ -102,6 +102,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
+  # shellcheck disable=SC1090
   . ~/.bash_aliases
 fi
 
@@ -128,13 +129,12 @@ fi
 function remove_duplicate_paths() {
   if declare -A &>/dev/null; then
     local IFS=':'
-    read -ra _paths <<< "$PATH"
+    read -ra _paths <<<"$PATH"
     declare -A _unique_paths
     local _result
 
-    for _path in "${_paths[@]}"
-    do
-      if [[ -n $_path ]] && (( _unique_paths["$_path"]++ == 0 )); then
+    for _path in "${_paths[@]}"; do
+      if [[ -n $_path ]] && ((_unique_paths["$_path"]++ == 0)); then
         _result+="$_path:"
       fi
     done
@@ -146,13 +146,6 @@ function remove_duplicate_paths() {
     _p=$(awk 'BEGIN{RS=":";ORS=":"} !x[$0]++' <<<"${PATH}:")
     PATH=${_p%:*:}
   fi
-}
-
-# Change directory of a git repository managed by ghq using fzf
-function change-git-repository-with-fzf () {
-  local WORKDIR=$(ghq list -p | fzf --preview "onefetch --no-art --no-color-palette {}")
-  [ -z "$WORKDIR" ] && return
-  cd $WORKDIR
 }
 
 #-------------#
@@ -178,7 +171,9 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   export SSH_AUTH_SOCK
 fi
-export GPG_TTY=$(tty)
+
+GPG_TTY=$(tty)
+export GPG_TTY
 
 #-------------#
 # Activations #
@@ -192,10 +187,11 @@ eval "$(starship init bash)"
 
 # fzf
 if command -v fzf >/dev/null 2>&1; then
-    # shellcheck source=/dev/null
-    eval "$(fzf --bash)"
-    # common settings of fzf
-    [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh
+  # shellcheck source=/dev/null
+  eval "$(fzf --bash)"
+  # common settings of fzf
+  # shellcheck source=/dev/null
+  [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/shell/fzf.sh
 fi
 
 #---------#
@@ -214,16 +210,21 @@ if type eza >/dev/null 2>&1; then
 fi
 
 # ghq and fzf
-if command -v "ghq" >/dev/null 2>&1 && command -v "fzf" >/dev/null 2>&1; then
+if command -v ghq >/dev/null 2>&1 && command -v fzf >/dev/null 2>&1; then
   alias cgr='change-git-repository-with-fzf'
 fi
 
 # lazygit
 alias lg='lazygit'
 
+# chezmoi for private dotfiles
+alias chezmoi-private='chezmoi --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml'
+
 #--------#
 # Others #
 #--------#
+
+export HISTCONTROL=ignorespace
 
 # Remove duplicate $PATH entries
 remove_duplicate_paths

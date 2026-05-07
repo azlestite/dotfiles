@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# fzf configuration.
+#
+# shellcheck disable=SC2089,SC2090
 
 # Search files that include hidden files and symbolic links, but exclude those in .gitignore
 __fzf_fd_files_cmd="fd --type f --strip-cwd-prefix --hidden --follow"
@@ -67,9 +71,10 @@ export FZF_TMUX_OPTS="-p 90%"
 
 if command -v "ghq" >/dev/null 2>&1; then
   # Change directory of a git repository managed by ghq using fzf
-  function change-git-repository-with-fzf () {
-    local WORKDIR=$(ghq list -p | fzf --preview "onefetch --no-art --no-color-palette {}")
-    [ -z "$WORKDIR" ] && return
-    cd $WORKDIR
+  function change-git-repository-with-fzf() {
+    local repo_dir
+    repo_dir=$(ghq list -p | fzf --preview "onefetch --no-art --no-color-palette {}")
+    [ -z "$repo_dir" ] && return
+    cd "$repo_dir" || exit
   }
 fi

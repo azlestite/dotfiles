@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# shellcheck disable=all
+
+# chezmoi のソースディレクトリを環境変数としてエクスポート
+# export CHEZMOI_SOURCE_DIR="{{ .chezmoi.sourceDir }}
+
+export CHEZMOI_REPO_ROOT="{{ .chezmoi.workingTree }}"
+
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.idLike "debian")) }}
+  {{- include "../install/ubuntu/os_config.sh" }}
+{{ end }}

@@ -1,0 +1,24 @@
+services:
+  dotfiles:
+    build:
+      context: .
+      args:
+        USERNAME: ${USER}
+        USER_UID: ${UID:-1000}
+        USER_GID: ${GID:-1000}
+    image: ${DOCKER_IMAGE_NAME}-image
+    container_name: ${DOCKER_IMAGE_NAME}-container
+    hostname: ${DOCKER_IMAGE_NAME}-test
+    volumes:
+      - ${PWD}:${HOME}/.local/share/chezmoi
+      - ${HOME}/.gnupg:${HOME}/.gnupg
+      - ${HOME}/.local/share/chezmoi-private:${HOME}/.local/share/chezmoi-private
+    working_dir: ${HOME}/.local/share/chezmoi
+    environment:
+      - BW_CLIENTID
+      - BW_CLIENTSECRET
+      - TTT
+      - GPG_TTY=/dev/tty
+      # - SSH_AUTH_SOCK=${HOME}/.gnupg/S.gpg-agent.ssh
+    tty: true
+    restart: always

@@ -179,7 +179,11 @@ function main() {
 
   # restart_shell # Disabled because the at_exit function does not work properly.
 
-  # curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.sh -o /tmp/setup.sh && source /tmp/setup.sh
+  # curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/pre_setup.sh -o /tmp/pre_setup.sh && source /tmp/pre_setup.sh && rm -rf /tmp/pre_setup.sh && echo $BW_SESSION
+
+  # git clone https://github.com/azlestite/dotfiles . && source pre_setup.sh && echo $BW_SESSION
+
+  # source pre_setup.sh && echo $BW_SESSION && ./setup.sh
 }
 
 # source setup.sh in the current shell to ensure that environment variables are properly set

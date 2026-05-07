@@ -66,7 +66,7 @@ docker-shell: ## Launch a shell inside the container
 # Setup
 .PHONY: setup
 setup: ## Run the setup script to initialize the dotfiles
-	source pre_setup.sh && echo $BW_SESSION
+	source pre_setup.sh && echo $$BW_SESSION && ./setup.sh
 
 #
 # Chezmoi

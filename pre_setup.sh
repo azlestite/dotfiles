@@ -11,28 +11,17 @@ if [ "${DOTFILES_DEBUG:-}" ]; then
 fi
 
 function install_prerequisite_packages() {
-  # Install prerequisite packages for the setup.
-  # This can include packages like curl, git, etc. that are required for the setup process.
-  # For example:
   sudo apt update
   sudo apt install -y curl git unzip wget
 
-  # bwコマンドが既に存在し、BW_SESSION環境変数も設定されている場合はスキップ
-  # BW_SESSIONが設定されていない場合はBW_SESSION="$(bw unlock --raw)"を実行して環境変数を設定する
-  # どちらも条件を満たさない場合は、Bitwarden CLIのインストールスクリプトを現在のシェルで実行する
   if command -v bw >/dev/null 2>&1; then
     echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
-    if [ -n "${BW_SESSION:-}" ]; then
-      echo "BW_SESSION is already set. Skipping Bitwarden CLI login and unlock."
+
+    if [[ -z "${BW_SESSION}" ]]; then
+      echo "BW_SESSION is not set. Unlock Bitwarden CLI..."
+      login_and_unlock_bitwarden_cli
     else
-      echo "BW_SESSION is not set. Attempting to unlock Bitwarden CLI session..."
-      # bw login
-      # bw sync
-      # BW_SESSION="$(bw unlock --raw)"
-      # export BW_SESSION
-      # source "install/ubuntu/bitwarden_cli.sh"
-      # echo $(dirname "${BASH_SOURCE[0]}")
-      login_bitwarden_cli
+      echo "BW_SESSION is already set. Skipping..."
     fi
   else
     install_bitwarden_cli
@@ -48,13 +37,10 @@ function install_bitwarden_cli() {
 
   export PATH="$HOME/.local/bin:$PATH"
   # source $HOME/.profile
-  bw login
-  bw sync
-  BW_SESSION="$(bw unlock --raw)"
-  export BW_SESSION
+  login_and_unlock_bitwarden_cli
 }
 
-function login_bitwarden_cli() {
+function login_and_unlock_bitwarden_cli() {
   bw login
   bw sync
   BW_SESSION="$(bw unlock --raw)"

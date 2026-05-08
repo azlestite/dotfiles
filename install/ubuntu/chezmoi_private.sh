@@ -39,6 +39,7 @@ function uninstall_chezmoi_private() {
 # @description Run the private chezmoi initialization flow.
 # @noargs
 function main() {
+  souce ~/.profile
   install_chezmoi_private
 }
 

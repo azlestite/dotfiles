@@ -9,9 +9,9 @@ Run the bootstrap script on a completely fresh macOS:
 ```bash
 # One-liner (downloads and runs bootstrap script)
 
-source "$(curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/pre_setup.sh)"
+# source "$(curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/pre_setup.sh)"
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.sh)"
 ```
 
 ## Manual Setup

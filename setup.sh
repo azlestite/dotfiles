@@ -129,38 +129,33 @@ function initialize_dotfiles() {
   run_chezmoi
 }
 
-function check_prerequisite_packages() {
-  # bwコマンドが存在し、BW_SESSION環境変数も設定されている場合は問題ないのでスキップ
-  # それ以外の場合は、環境変数を設定するため現在のシェルでpre_setup.shを実行する
-  if command -v bw >/dev/null 2>&1; then
-    echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
-    if [ -n "${BW_SESSION:-}" ]; then
-      echo "BW_SESSION is already set. Skipping Bitwarden CLI login and unlock."
-    else
-      echo "BW_SESSION is not set."
-      echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
-      exit 1
-    fi
-  else
-    echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
-    exit 1
-  fi
-
-}
-
 function install_prerequisite_packages() {
   sudo apt update
   sudo apt install -y curl git unzip wget
 
   if command -v bw >/dev/null 2>&1; then
-    echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
+    echo "Bitwarden CLI is already installed. Checking BW STATUS..."
 
-    if [[ -z "${BW_SESSION:-}" ]]; then
-      echo "BW_SESSION is not set. Unlock Bitwarden CLI..."
-      login_and_unlock_bitwarden_cli
-    else
-      echo "BW_SESSION is already set. Skipping..."
-    fi
+    case "$(bw status)" in
+      *"\"unauthenticated\""*)
+        echo "Bitwarden CLI is unauthenticated. Logging in and unlocking..."
+        login_and_unlock_bitwarden_cli
+        ;;
+      *"\"locked\""*)
+        echo "Bitwarden CLI is locked. Unlocking..."
+        unlock_bitwarden_cli
+        ;;
+      *"\"unlocked\""*)
+        echo "Bitwarden CLI is unlocked."
+        ;;
+    esac
+
+    # if [[ -z "${BW_SESSION:-}" ]]; then
+    #   echo "BW_SESSION is not set. Unlock Bitwarden CLI..."
+    #   login_and_unlock_bitwarden_cli
+    # else
+    #   echo "BW_SESSION is already set. Skipping..."
+    # fi
   else
     install_bitwarden_cli
   fi
@@ -176,6 +171,25 @@ function install_bitwarden_cli() {
   export PATH="$HOME/.local/bin:$PATH"
   # source $HOME/.profile
   login_and_unlock_bitwarden_cli
+}
+
+function unlock_bitwarden_cli() {
+  BW_SESSION="$(bw unlock --raw)"
+  export BW_SESSION
+  echo "BW_SESSION: ${BW_SESSION}"
+
+  if [ -f ".env" ]; then
+    if grep -q "^BW_SESSION=" .env; then
+      echo "Updating BW_SESSION in .env file..."
+      sed -i "s|\(BW_SESSION=\)\(.*\)|\1${BW_SESSION}|g" .env
+    else
+      echo "Adding BW_SESSION to .env file..."
+      echo "BW_SESSION=${BW_SESSION}" >>.env
+    fi
+  else
+    echo "Creating .env file and saving BW_SESSION..."
+    echo "BW_SESSION=${BW_SESSION}" >.env
+  fi
 }
 
 function login_and_unlock_bitwarden_cli() {
@@ -211,6 +225,25 @@ function login_and_unlock_bitwarden_cli() {
     echo "BW_SESSION=${BW_SESSION}" >.env
   fi
   # echo "${BW_SESSION}" | xargs -I % sed -i "s|\(BW_SESSION=\)\(.*\)|\1%|g" .env
+}
+
+function check_prerequisite_packages() {
+  # bwコマンドが存在し、BW_SESSION環境変数も設定されている場合は問題ないのでスキップ
+  # それ以外の場合は、環境変数を設定するため現在のシェルでpre_setup.shを実行する
+  if command -v bw >/dev/null 2>&1; then
+    echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
+    if [ -n "${BW_SESSION:-}" ]; then
+      echo "BW_SESSION is already set. Skipping Bitwarden CLI login and unlock."
+    else
+      echo "BW_SESSION is not set."
+      echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
+      exit 1
+    fi
+  else
+    echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
+    exit 1
+  fi
+
 }
 
 function main() {

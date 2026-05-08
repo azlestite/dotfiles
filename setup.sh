@@ -227,33 +227,19 @@ function login_and_unlock_bitwarden_cli() {
   # echo "${BW_SESSION}" | xargs -I % sed -i "s|\(BW_SESSION=\)\(.*\)|\1%|g" .env
 }
 
-function check_prerequisite_packages() {
-  # bwコマンドが存在し、BW_SESSION環境変数も設定されている場合は問題ないのでスキップ
-  # それ以外の場合は、環境変数を設定するため現在のシェルでpre_setup.shを実行する
-  if command -v bw >/dev/null 2>&1; then
-    echo "Bitwarden CLI is already installed. Checking BW_SESSION..."
-    if [ -n "${BW_SESSION:-}" ]; then
-      echo "BW_SESSION is already set. Skipping Bitwarden CLI login and unlock."
-    else
-      echo "BW_SESSION is not set."
-      echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
-      exit 1
-    fi
-  else
-    echo "Run 'source pre_setup.sh' to install Bitwarden CLI and set BW_SESSION environment variable."
-    exit 1
-  fi
+# ホームディレクトリ直下のtar.gzファイルをtar xzfで展開
+function extract_backup_files() {
+  cd "$HOME"
 
+  for f in *.tar.gz; do
+    tar xzf "$f" -C "$HOME"/
+  done
 }
 
 function main() {
   echo "${DOTFILES_LOGO}"
 
-  # ホームディレクトリ直下のtar.gzファイルをtar xzfで展開
-  cd ~
-  for f in *.tar.gz; do tar xzf "$f" -C ~/; done
-
-  # check_prerequisite_packages
+  extract_backup_files
 
   install_prerequisite_packages
 

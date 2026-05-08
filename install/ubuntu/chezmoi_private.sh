@@ -40,23 +40,22 @@ function uninstall_chezmoi_private() {
 # @description Run the private chezmoi initialization flow.
 # @noargs
 function main() {
-  # source ~/.bashrc
+  source ~/.bashrc
 
-  # Use gpg-agent instead of ssh-agent
-  if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
-    echo "Starting gpg-agent..."
-    gpg-connect-agent /bye >/dev/null 2>&1
-  fi
+  # # Use gpg-agent instead of ssh-agent
+  # if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
+  #   echo "Starting gpg-agent..."
+  #   gpg-connect-agent /bye >/dev/null 2>&1
+  # fi
 
-  unset SSH_AGENT_PID
-  echo "gnupg_SSH_AUTH_SOCK_by: ${gnupg_SSH_AUTH_SOCK_by:-0}"
-  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-    export SSH_AUTH_SOCK
-  fi
+  # unset SSH_AGENT_PID
+  # if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  #   SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  #   export SSH_AUTH_SOCK
+  # fi
 
-  GPG_TTY=$(tty)
-  export GPG_TTY
+  # GPG_TTY=$(tty)
+  # export GPG_TTY
 
   install_chezmoi_private
 }

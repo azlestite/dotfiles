@@ -31,6 +31,13 @@ declare -r DOTFILES_LOGO='
 declare -r DOTFILES_REPO_URL="https://github.com/azlestite/dotfiles"
 declare -r BRANCH_NAME="${BRANCH_NAME:-main}"
 
+# 現在のスクリプトのパス
+declare -r SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)"
+# スクリプトの名前
+declare -r SCRIPT_NAME="$(basename "${BASH_SOURCE:-$0}")"
+# スクリプトのフルパス
+declare -r SCRIPT_PATH="${SCRIPT_DIR}/${SCRIPT_NAME}"
+
 function is_ci() {
   "${CI:-false}"
 }
@@ -208,30 +215,31 @@ function login_and_unlock_bitwarden_cli() {
   # BW_SESSION="$(bw unlock --raw)"
   export BW_SESSION
   echo "BW_SESSION: ${BW_SESSION}"
-  # .envファイルの有無で処理を変更
+
+  # $HOME/.local/share/chezmoi/.envファイルの有無で処理を変更
   # .envファイルが存在する場合は、BW_SESSIONの値を更新
   # .envファイルが存在しない場合は、.envファイルを作成してBW_SESSIONの値を保存
-  if [ -f ".env" ]; then
+  local env_file="$HOME/.local/share/chezmoi/.env"
+  if [ -f "$env_file" ]; then
     # grepコマンドでBW_SESSION=の行を検索し、存在する場合は置換、存在しない場合は末尾に追加
-    if grep -q "^BW_SESSION=" .env; then
+    if grep -q "^BW_SESSION=" "$env_file"; then
       echo "Updating BW_SESSION in .env file..."
-      sed -i "s|\(BW_SESSION=\)\(.*\)|\1${BW_SESSION}|g" .env
+      sed -i "s|\(BW_SESSION=\)\(.*\)|\1${BW_SESSION}|g" "$env_file"
     else
       echo "Adding BW_SESSION to .env file..."
-      echo "BW_SESSION=${BW_SESSION}" >>.env
+      echo "BW_SESSION=${BW_SESSION}" >>"$env_file"
     fi
   else
     echo "Creating .env file and saving BW_SESSION..."
     echo "BW_SESSION=${BW_SESSION}" >.env
   fi
-  # echo "${BW_SESSION}" | xargs -I % sed -i "s|\(BW_SESSION=\)\(.*\)|\1%|g" .env
 }
 
 # ホームディレクトリ直下のtar.gzファイルをtar xzfで展開
 function extract_backup_files() {
-  cd "$HOME"
+  # cd "$HOME"
 
-  for f in *.tar.gz; do
+  for f in "$HOME"/*.tar.gz; do
     tar xzf "$f" -C "$HOME"/
   done
 }
@@ -241,6 +249,7 @@ function main() {
   echo "${DOTFILES_LOGO}"
 
   extract_backup_files
+  echo "pwd: $(pwd)"
 
   install_prerequisite_packages
 

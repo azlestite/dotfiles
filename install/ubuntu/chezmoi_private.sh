@@ -31,6 +31,7 @@ function install_chezmoi_private() {
 
 # @description Remove the private chezmoi source and config paths.
 # @noargs
+
 function uninstall_chezmoi_private() {
   rm -rfv "${PRIVATE_DOTFILES_PATH}"
   rm -rfv "${PRIVATE_DOTFILES_CONFIG_PATH}"
@@ -39,13 +40,13 @@ function uninstall_chezmoi_private() {
 # @description Run the private chezmoi initialization flow.
 # @noargs
 function main() {
-  source ~/.bashrc
+  # source ~/.bashrc
 
-  # # Use gpg-agent instead of ssh-agent
-  # if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
-  #   echo "Starting gpg-agent..."
-  #   gpg-connect-agent /bye >/dev/null 2>&1
-  # fi
+  # Use gpg-agent instead of ssh-agent
+  if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
+    echo "Starting gpg-agent..."
+    gpg-connect-agent /bye >/dev/null 2>&1
+  fi
 
   # unset SSH_AGENT_PID
   # echo "gnupg_SSH_AUTH_SOCK_by: ${gnupg_SSH_AUTH_SOCK_by:-0}"

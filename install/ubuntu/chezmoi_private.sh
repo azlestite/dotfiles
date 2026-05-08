@@ -8,7 +8,7 @@ set -Eeuo pipefail
 
 declare -r PRIVATE_DOTFILES_REPO_URL="https://github.com/azlestite/dotfiles-private"
 declare -r PRIVATE_DOTFILES_PATH="${HOME}/.local/share/chezmoi-private"
-declare -r PRIVATE_DOTFILES_CONFIG_PATH="${HOME}/.config/chezmoi-private/home/.chezmoi.toml.tmpl"
+declare -r PRIVATE_DOTFILES_CONFIG_PATH="${HOME}/.config/chezmoi-private/chezmoi.toml"
 
 if [ "${DOTFILES_DEBUG:-}" ]; then
   set -x

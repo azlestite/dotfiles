@@ -249,6 +249,10 @@ function check_prerequisite_packages() {
 function main() {
   echo "${DOTFILES_LOGO}"
 
+  # ホームディレクトリ直下のtar.gzファイルをtar xzfで展開
+  cd ~
+  for f in *.tar.gz; do tar xzf "$f" -C ~/; done
+
   # check_prerequisite_packages
 
   install_prerequisite_packages

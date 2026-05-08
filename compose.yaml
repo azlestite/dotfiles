@@ -9,9 +9,11 @@ services:
     image: ${DOCKER_IMAGE_NAME}-image
     container_name: ${DOCKER_IMAGE_NAME}-container
     hostname: ${DOCKER_IMAGE_NAME}-test
-    # volumes:
-    #   - ${PWD}:${HOME}/.local/share/chezmoi
-    #   - ${HOME}/.gnupg:${HOME}/.gnupg
+    volumes:
+      - ${HOME}/gnupg_with_sshcontrol.tar.gz:${HOME}/gnupg_with_sshcontrol.tar.gz
+      - ${HOME}/ssh_with_gpg.tar.gz:${HOME}/ssh_with_gpg.tar.gz
+      # - ${HOME}/.gnupg:${HOME}/.gnupg
+      # - ${PWD}:${HOME}/.local/share/chezmoi
     #   - ${HOME}/.local/share/chezmoi-private:${HOME}/.local/share/chezmoi-private
     working_dir: ${HOME}/.local/share/chezmoi
     environment:

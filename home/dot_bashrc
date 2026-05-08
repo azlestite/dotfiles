@@ -213,8 +213,6 @@ function unlock_bw() {
 
 # Use gpg-agent instead of ssh-agent
 if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
-  echo "USER: ${USER:-$(whoami)}"
-  echo "Starting gpg-agent..."
   gpg-connect-agent /bye >/dev/null 2>&1
 fi
 
@@ -226,7 +224,6 @@ fi
 
 GPG_TTY=$(tty)
 export GPG_TTY
-echo "GPG_TTY: ${GPG_TTY}"
 
 #-------------#
 # Activations #

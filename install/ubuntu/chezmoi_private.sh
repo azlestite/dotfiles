@@ -37,25 +37,26 @@ function uninstall_chezmoi_private() {
   rm -rfv "${PRIVATE_DOTFILES_CONFIG_PATH}"
 }
 
+function use_gpg_agent() {
+  if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
+    echo "Starting gpg-agent..."
+    gpg-connect-agent /bye >/dev/null 2>&1
+  fi
+
+  unset SSH_AGENT_PID
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+  fi
+
+  GPG_TTY=$(tty)
+  export GPG_TTY
+}
+
 # @description Run the private chezmoi initialization flow.
 # @noargs
 function main() {
-  source ~/.bashrc
-
-  # # Use gpg-agent instead of ssh-agent
-  # if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
-  #   echo "Starting gpg-agent..."
-  #   gpg-connect-agent /bye >/dev/null 2>&1
-  # fi
-
-  # unset SSH_AGENT_PID
-  # if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  #   SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-  #   export SSH_AUTH_SOCK
-  # fi
-
-  # GPG_TTY=$(tty)
-  # export GPG_TTY
+  use_gpg_agent
 
   install_chezmoi_private
 }

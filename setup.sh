@@ -237,6 +237,7 @@ function extract_backup_files() {
 }
 
 function main() {
+  echo "pwd: $(pwd)"
   echo "${DOTFILES_LOGO}"
 
   extract_backup_files
@@ -245,6 +246,7 @@ function main() {
 
   initialize_dotfiles
   # echo "BW_SESSION: ${BW_SESSION}"
+  echo "pwd: $(pwd)"
 
   # restart_shell # Disabled because the at_exit function does not work properly.
 

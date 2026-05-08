@@ -237,25 +237,21 @@ function login_and_unlock_bitwarden_cli() {
 
 # ホームディレクトリ直下のtar.gzファイルをtar xzfで展開
 function extract_backup_files() {
-  # cd "$HOME"
-
   for f in "$HOME"/*.tar.gz; do
     tar xzf "$f" -C "$HOME"/
   done
 }
 
 function main() {
-  echo "pwd: $(pwd)"
   echo "${DOTFILES_LOGO}"
 
   extract_backup_files
-  echo "pwd: $(pwd)"
 
   install_prerequisite_packages
 
   initialize_dotfiles
   # echo "BW_SESSION: ${BW_SESSION}"
-  echo "pwd: $(pwd)"
+  # echo "pwd: $(pwd)"
 
   # restart_shell # Disabled because the at_exit function does not work properly.
 

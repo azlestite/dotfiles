@@ -125,8 +125,8 @@ function initialize_dotfiles() {
     # Therefore, skip the sudo keep alive function.
     keepalive_sudo
   fi
-  # run_chezmoi
   echo "Initializing dotfiles with chezmoi..."
+  run_chezmoi
 }
 
 function check_prerequisite_packages() {
@@ -179,10 +179,38 @@ function install_bitwarden_cli() {
 }
 
 function login_and_unlock_bitwarden_cli() {
-  bw login
-  bw sync
-  BW_SESSION="$(bw unlock --raw)"
+  # BW_CLIENTIDとBW_CLIENTSECRETが存在する場合はbw login --apikeyを使用してログインし、そうでない場合はbw loginを使用してログインする
+  if [[ -n "${BW_CLIENTID:-}" && -n "${BW_CLIENTSECRET:-}" ]]; then
+    echo "Logging in to Bitwarden CLI using API key..."
+    bw login --apikey
+    BW_SESSION="$(bw unlock --raw)"
+  else
+    echo "Logging in to Bitwarden CLI using interactive login..."
+    # bw login
+    BW_SESSION=$(bw login --raw)
+  fi
+
+  # bw sync
+  # BW_SESSION="$(bw unlock --raw)"
   export BW_SESSION
+  echo "BW_SESSION: ${BW_SESSION}"
+  # .envファイルの有無で処理を変更
+  # .envファイルが存在する場合は、BW_SESSIONの値を更新
+  # .envファイルが存在しない場合は、.envファイルを作成してBW_SESSIONの値を保存
+  if [ -f ".env" ]; then
+    # grepコマンドでBW_SESSION=の行を検索し、存在する場合は置換、存在しない場合は末尾に追加
+    if grep -q "^BW_SESSION=" .env; then
+      echo "Updating BW_SESSION in .env file..."
+      sed -i "s|\(BW_SESSION=\)\(.*\)|\1${BW_SESSION}|g" .env
+    else
+      echo "Adding BW_SESSION to .env file..."
+      echo "BW_SESSION=${BW_SESSION}" >>.env
+    fi
+  else
+    echo "Creating .env file and saving BW_SESSION..."
+    echo "BW_SESSION=${BW_SESSION}" >.env
+  fi
+  # echo "${BW_SESSION}" | xargs -I % sed -i "s|\(BW_SESSION=\)\(.*\)|\1%|g" .env
 }
 
 function main() {
@@ -193,7 +221,7 @@ function main() {
   install_prerequisite_packages
 
   initialize_dotfiles
-  echo "BW_SESSION: ${BW_SESSION}"
+  # echo "BW_SESSION: ${BW_SESSION}"
 
   # restart_shell # Disabled because the at_exit function does not work properly.
 

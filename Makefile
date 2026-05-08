@@ -1,5 +1,5 @@
-# -include .env
-# export
+-include .env
+export
 
 # DOCKER_IMAGE_NAME=dotfiles
 # DOCKER_ARCH=x86_64
@@ -71,6 +71,10 @@ setup: ## Run the setup script to initialize the dotfiles
 #
 # Chezmoi
 #
+
+.PHONY: test
+test:
+	chezmoi apply --dry-run && echo $$BW_SESSION
 
 .PHONY: init
 init: ## Initialize chezmoi and apply the configuration

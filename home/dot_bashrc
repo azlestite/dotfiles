@@ -148,6 +148,14 @@ function remove_duplicate_paths() {
   fi
 }
 
+function unlock_bw() {
+  if [[ -z $BW_SESSION ]]; then
+    >&2 echo 'bw locked - unlocking into a new session'
+    BW_SESSION="$(bw unlock --raw)"
+    export BW_SESSION
+  fi
+}
+
 #-------------#
 # SSH and GPG #
 #-------------#
@@ -218,7 +226,14 @@ fi
 alias lg='lazygit'
 
 # chezmoi for private dotfiles
-alias chezmoi-private='chezmoi --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml'
+if command -v chezmoi >/dev/null 2>&1; then
+  alias chezmoi-private='chezmoi --source ~/.local/share/chezmoi-private --config ~/.config/chezmoi-private/chezmoi.toml'
+fi
+
+# bitwarden cli
+if command -v bw >/dev/null 2>&1; then
+  alias ubw='unlock_bw'
+fi
 
 #--------#
 # Others #

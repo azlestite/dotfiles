@@ -39,7 +39,7 @@ function uninstall_chezmoi_private() {
 # @description Run the private chezmoi initialization flow.
 # @noargs
 function main() {
-  source "$HOME"/.bashrc
+  source ~/.bashrc
 
   # # Use gpg-agent instead of ssh-agent
   # if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then

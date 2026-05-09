@@ -3,10 +3,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
-# setup.ps1
-# 実行ポリシーの一時的な変更（ネットワーク越しに実行する場合の安全策）
-# --- 文字化け対策 ---
-
 write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
 
 # 1. Check for Administrative Privileges

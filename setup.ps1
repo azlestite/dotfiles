@@ -1,9 +1,9 @@
 $ErrorActionPreference = "Stop"
 
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+# [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+# $OutputEncoding = [System.Text.Encoding]::UTF8
 
-write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
+write-host "--- Dotfiles Setup Started 日本語サンプル ---" -ForegroundColor Cyan
 
 # 1. Check for Administrative Privileges
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())

@@ -1,9 +1,12 @@
+# iwr -useb https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1 | iex
+# 日本語を含む場合
+# iwr -useb https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1 | Select-Object -ExpandProperty Content | iex
+# iex ((iwr -useb https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1).Content)
+# irm https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1 | iex
+
 $ErrorActionPreference = "Stop"
 
-# [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-# $OutputEncoding = [System.Text.Encoding]::UTF8
-
-write-host "--- Dotfiles Setup Started 日本語サンプル ---" -ForegroundColor Cyan
+write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
 
 # 1. Check for Administrative Privileges
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())

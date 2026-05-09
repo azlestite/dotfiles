@@ -10,54 +10,54 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 
 write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
 
-# 1. 管理者権限のチェック（Wingetインストール等で必要な場合があるため）
+# 1. Check for Administrative Privileges
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "一部のインストールには管理者権限が必要な場合があります。失敗した場合は管理者として実行してください。"
+    Write-Warning "Some installations may require Administrator privileges. If it fails, please run PowerShell as Admin."
 }
 
-# 2. Winget (Package Manager) の確認
+# 2. Check for Winget
 if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-    throw "Wingetが見つかりません。Windows App Installerを更新してください。"
+    throw "Winget not found. Please update Windows App Installer."
 }
 
-# 3. chezmoi のインストール確認
+# 3. Install chezmoi if not exists
 if (-not (Get-Command chezmoi -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing chezmoi..." -ForegroundColor Yellow
+    Write-Host "Installing chezmoi via Winget..." -ForegroundColor Yellow
     winget install --id twpayne.chezmoi --source winget --silent
-    # パスを反映させるためにセッションを更新するか、直接パスを指定
+    # Refresh Path for the current session
     $env:Path += ";$env:USERPROFILE\AppData\Local\Microsoft\WinGet\Links"
 }
 
-# 4. Bitwarden CLI (bw) のインストール確認
+# 4. Install Bitwarden CLI (bw) if not exists
 if (-not (Get-Command bw -ErrorAction SilentlyContinue)) {
-    Write-Host "Installing Bitwarden CLI..." -ForegroundColor Yellow
+    Write-Host "Installing Bitwarden CLI via Winget..." -ForegroundColor Yellow
     winget install --id Bitwarden.CLI --source winget --silent
 }
 
-# 5. Bitwarden ログイン & セッション設定
+# 5. Bitwarden Login & Session Setup
 if (-not $env:BW_SESSION) {
-    Write-Host "Bitwardenにログインしてセッションキーを取得します..." -ForegroundColor Cyan
-    # 既にログイン済みか確認
+    Write-Host "Checking Bitwarden authentication..." -ForegroundColor Cyan
     $status = bw status | ConvertFrom-Json
     if ($status.status -eq "unauthenticated") {
+        Write-Host "Please login to Bitwarden:" -ForegroundColor White
         bw login
     }
 
-    # アンロックしてセッションキーを環境変数にセット
+    Write-Host "Unlocking vault to set BW_SESSION..." -ForegroundColor Cyan
     $sessionKey = bw unlock --raw
     if ($sessionKey) {
         $env:BW_SESSION = $sessionKey
-        Write-Host "BW_SESSION を現在のセッションに設定しました。" -ForegroundColor Green
+        Write-Host "BW_SESSION has been set for the current session." -ForegroundColor Green
+    } else {
+        Write-Error "Failed to retrieve Bitwarden session key."
     }
 }
 
 # 6. chezmoi init & apply
 Write-Host "Initializing chezmoi with builtin-git..." -ForegroundColor Yellow
-# あなたのリポジトリURLに合わせて変更してください
 $repoUrl = "https://github.com/azlestite/dotfiles.git"
 
-# --use-builtin-git を使用して初期化
 chezmoi init $repoUrl #--apply
 
 Write-Host "--- Setup Complete! ---" -ForegroundColor Green

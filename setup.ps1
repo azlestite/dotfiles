@@ -1,4 +1,4 @@
-# setup.ps1
+﻿# setup.ps1
 # 実行ポリシーの一時的な変更（ネットワーク越しに実行する場合の安全策）
 $ErrorActionPreference = "Stop"
 

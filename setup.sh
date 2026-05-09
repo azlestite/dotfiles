@@ -231,7 +231,7 @@ function login_and_unlock_bitwarden_cli() {
     fi
   else
     echo "Creating .env file and saving BW_SESSION..."
-    echo "BW_SESSION=${BW_SESSION}" >.env
+    echo "BW_SESSION=${BW_SESSION}" >"$env_file"
   fi
 }
 

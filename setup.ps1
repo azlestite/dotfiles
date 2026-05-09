@@ -2,6 +2,10 @@
 # 実行ポリシーの一時的な変更（ネットワーク越しに実行する場合の安全策）
 $ErrorActionPreference = "Stop"
 
+# --- 文字化け対策 ---
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+
 write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
 
 # 1. 管理者権限のチェック（Wingetインストール等で必要な場合があるため）
@@ -18,7 +22,7 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 # 3. chezmoi のインストール確認
 if (-not (Get-Command chezmoi -ErrorAction SilentlyContinue)) {
     Write-Host "Installing chezmoi..." -ForegroundColor Yellow
-    winget install --id chezmoi.chezmoi --source winget --silent
+    winget install --id twpayne.chezmoi --source winget --silent
     # パスを反映させるためにセッションを更新するか、直接パスを指定
     $env:Path += ";$env:USERPROFILE\AppData\Local\Microsoft\WinGet\Links"
 }

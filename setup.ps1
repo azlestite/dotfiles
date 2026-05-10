@@ -4,22 +4,19 @@
 # iex ((iwr -useb https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1).Content)
 # irm https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1 | iex
 
-$ErrorActionPreference = "Stop"
-
-write-host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
-
-# 1. Check for Administrative Privileges
-$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "Some installations may require Administrator privileges. If it fails, please run PowerShell as Admin."
+# 3. Install Git if not exists
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Git via Winget..." -ForegroundColor Yellow
+    winget install --id Git.Git --source winget --silent
 }
 
-# 2. Check for Winget
-if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-    throw "Winget not found. Please update Windows App Installer."
+# 4. Install Gpg4win if not exists
+if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Gpg4win via Winget..." -ForegroundColor Yellow
+    winget install --id GnuPG.Gpg4win --source winget --silent
 }
 
-# 3. Install chezmoi if not exists
+# 5. Install chezmoi if not exists
 if (-not (Get-Command chezmoi -ErrorAction SilentlyContinue)) {
     Write-Host "Installing chezmoi via Winget..." -ForegroundColor Yellow
     winget install --id twpayne.chezmoi --source winget --silent
@@ -27,13 +24,13 @@ if (-not (Get-Command chezmoi -ErrorAction SilentlyContinue)) {
     $env:Path += ";$env:USERPROFILE\AppData\Local\Microsoft\WinGet\Links"
 }
 
-# 4. Install Bitwarden CLI (bw) if not exists
+# 6. Install Bitwarden CLI (bw) if not exists
 if (-not (Get-Command bw -ErrorAction SilentlyContinue)) {
     Write-Host "Installing Bitwarden CLI via Winget..." -ForegroundColor Yellow
     winget install --id Bitwarden.CLI --source winget --silent
 }
 
-# 5. Bitwarden Login & Session Setup
+# 7. Bitwarden Login & Session Setup
 if (-not $env:BW_SESSION) {
     Write-Host "Checking Bitwarden authentication..." -ForegroundColor Cyan
     $status = bw status | ConvertFrom-Json
@@ -52,10 +49,12 @@ if (-not $env:BW_SESSION) {
     }
 }
 
-# 6. chezmoi init & apply
+# 8. chezmoi init & apply
 Write-Host "Initializing chezmoi with builtin-git..." -ForegroundColor Yellow
 $repoUrl = "https://github.com/azlestite/dotfiles.git"
 
-chezmoi init $repoUrl #--apply
+# Initializing with --use-builtin-git as originally requested
+# chezmoi init $repoUrl --use-builtin-git --apply
+chezmoi init $repoUrl
 
 Write-Host "--- Setup Complete! ---" -ForegroundColor Green

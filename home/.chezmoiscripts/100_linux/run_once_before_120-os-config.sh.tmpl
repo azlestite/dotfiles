@@ -8,5 +8,5 @@
 export CHEZMOI_REPO_ROOT="{{ .chezmoi.workingTree }}"
 
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.idLike "debian")) }}
-  {{- include "../../install/ubuntu/os_config.sh" }}
+  {{- include "../install/ubuntu/os_config.sh" }}
 {{ end }}

@@ -1,0 +1,8 @@
+[wsl2]
+memory=8GB
+swap=4GB
+processors=8
+
+[experimental]
+autoMemoryReclaim=dropcache
+sparseVhd=true

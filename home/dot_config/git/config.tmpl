@@ -14,7 +14,11 @@
   quotepath = false
   filemode = true
   ignorecase = false
-  editor = vi
+{{- if eq .chezmoi.os "windows" }}
+  editor = "code --wait"
+{{- else }}
+  editor = "nvim"
+{{- end }}
 [commit]
   verbose = true
   gpgsign = true

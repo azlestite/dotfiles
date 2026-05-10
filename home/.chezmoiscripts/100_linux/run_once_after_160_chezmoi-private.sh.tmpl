@@ -5,5 +5,7 @@
 export CHEZMOI_REPO_ROOT="{{ .chezmoi.workingTree }}"
 
 {{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.idLike "debian")) }}
-  {{- include "../install/ubuntu/apt_packages.sh" }}
+  {{ if .private_setup}}
+    {{- include "../../install/ubuntu/chezmoi_private.sh" }}
+  {{ end }}
 {{ end }}

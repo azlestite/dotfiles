@@ -4,6 +4,21 @@
 # iex ((iwr -useb https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1).Content)
 # irm https://raw.githubusercontent.com/azlestite/dotfiles/main/setup.ps1 | iex
 
+$ErrorActionPreference = "Stop"
+
+Write-Host "--- Dotfiles Setup Started ---" -ForegroundColor Cyan
+
+# 1. Check for Administrative Privileges
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Warning "Some installations may require Administrator privileges. If it fails, please run PowerShell as Admin."
+}
+
+# 2. Check for Winget
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    throw "Winget not found. Please update Windows App Installer."
+}
+
 # 3. Install Git if not exists
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Host "Installing Git via Winget..." -ForegroundColor Yellow
@@ -54,7 +69,7 @@ Write-Host "Initializing chezmoi with builtin-git..." -ForegroundColor Yellow
 $repoUrl = "https://github.com/azlestite/dotfiles.git"
 
 # Initializing with --use-builtin-git as originally requested
-# chezmoi init $repoUrl --use-builtin-git --apply
+# chezmoi init $repoUrl --apply
 chezmoi init $repoUrl
 
 Write-Host "--- Setup Complete! ---" -ForegroundColor Green

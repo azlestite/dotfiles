@@ -16,6 +16,7 @@
   ignorecase = false
 {{- if eq .chezmoi.os "windows" }}
   editor = "code --wait"
+  sshCommand = "C:/Windows/System32/OpenSSH/ssh.exe"
 {{- else }}
   editor = "nvim"
 {{- end }}
@@ -37,7 +38,11 @@
 [grep]
   lineNumber = true
 [gpg]
+{{- if eq .chezmoi.os "windows" }}
+  program = "C:\\Program Files\\GnuPG\\bin\\gpg.exe"
+{{- else }}
   program = gpg
+{{- end }}
 [ghq]
   root = ~/ghq
 [alias]

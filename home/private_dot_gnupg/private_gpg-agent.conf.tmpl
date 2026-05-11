@@ -1,0 +1,14 @@
+disable-scdaemon
+enable-ssh-support
+
+{{- if eq .chezmoi.os "windows" }}
+enable-win32-openssh-support
+pinentry-program "C:\Program Files\GnuPG\bin\pinentry-basic.exe"
+{{- else }}
+pinentry-program /usr/bin/pinentry-curses
+{{- end }}
+
+default-cache-ttl 3600
+default-cache-ttl-ssh 10800
+max-cache-ttl 10800
+max-cache-ttl-ssh 10800

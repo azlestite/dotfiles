@@ -3,7 +3,7 @@ enable-ssh-support
 
 {{- if eq .chezmoi.os "windows" }}
 enable-win32-openssh-support
-pinentry-program "C:\Program Files\GnuPG\bin\pinentry-basic.exe"
+pinentry-program "C:\Program Files\Gpg4win\bin\pinentry.exe"
 {{- else }}
 pinentry-program /usr/bin/pinentry-curses
 {{- end }}

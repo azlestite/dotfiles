@@ -17,6 +17,7 @@
 {{- if eq .chezmoi.os "windows" }}
   editor = "code --wait"
   sshCommand = "C:/Windows/System32/OpenSSH/ssh.exe"
+  longpaths = true
 {{- else }}
   editor = "nvim"
 {{- end }}
@@ -39,7 +40,7 @@
   lineNumber = true
 [gpg]
 {{- if eq .chezmoi.os "windows" }}
-  program = "C:\\Program Files\\GnuPG\\bin\\gpg.exe"
+  program = "C:/Program Files/GnuPG/bin/gpg.exe"
 {{- else }}
   program = gpg
 {{- end }}

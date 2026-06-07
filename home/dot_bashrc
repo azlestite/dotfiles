@@ -212,9 +212,8 @@ function unlock_bw() {
 # fi
 
 # Use gpg-agent instead of ssh-agent
-if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
-  gpg-connect-agent /bye >/dev/null 2>&1
-fi
+GPG_TTY=$(tty)
+export GPG_TTY
 
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
@@ -222,8 +221,20 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK
 fi
 
-GPG_TTY=$(tty)
-export GPG_TTY
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
+# if ! pgrep -x -u "${USER:-$(whoami)}" gpg-agent >/dev/null 2>&1; then
+#   gpg-connect-agent /bye >/dev/null 2>&1
+# fi
+
+# unset SSH_AGENT_PID
+# if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+#   SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+#   export SSH_AUTH_SOCK
+# fi
+
+# GPG_TTY=$(tty)
+# export GPG_TTY
 
 #-------------#
 # Activations #

@@ -27,7 +27,7 @@
 .chezmoiscripts/100_linux/110_native/**
 {{-   else }}
 # only use on WSL
-.chezmoiscripts/100_linux/190_wsl.sh
+.chezmoiscripts/100_linux/120-wsl.sh
 {{-   end }}
 {{- else }}
 # only use on Linux

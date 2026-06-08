@@ -77,6 +77,6 @@ Write-Host "Initializing chezmoi with builtin-git..." -ForegroundColor Yellow
 $repoUrl = "https://github.com/azlestite/dotfiles.git"
 
 # Initializing with --use-builtin-git as originally requested
-chezmoi init $repoUrl --apply --dry-run --verbose
+chezmoi init $repoUrl #--apply --dry-run --verbose
 
 Write-Host "--- Setup Complete! ---" -ForegroundColor Green

@@ -11,10 +11,10 @@ if (-not $isElevated) {
   $buildNumber = [int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber)
   if ($buildNumber -ge 6000) {  # Windows Vista / Windows Server 2008 or later
     $scriptPath = $MyInvocation.MyCommand.Path
-    $baseArguments = @('-File', $scriptPath)
+    $baseArguments = @('-NoExit', '-File', $scriptPath)
     $allArguments = $baseArguments + $MyInvocation.UnboundArguments
 
-    Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $allArguments
+    Start-Process -Wait -FilePath pwsh.exe -Verb Runas -ArgumentList $allArguments
     Exit
   }
 }
@@ -43,6 +43,3 @@ Function winst {
 # Tools
 winst Google.Chrome
 winst Google.JapaneseIME
-
-# スクリプト停止
-Read-Host -Prompt "何かキーを押すと終了します"

@@ -6,6 +6,11 @@ set -Ceuo pipefail
 
 export CHEZMOI_REPO_ROOT="{{ .chezmoi.workingTree }}"
 
+if [ -e /.dockerenv ]; then
+  echo "Running inside a container. Skipping WSL configuration."
+  exit 0
+fi
+
 echo "WSL configuration..."
 
 sudo tee /etc/wsl.conf >/dev/null <<'EOF'
